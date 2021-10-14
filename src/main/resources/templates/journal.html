@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Journal</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <script type="text/javascript">
+        function submitform() {
+            let form = document.forms[0];
+            var json = {
+                "body": form.elements["body"].value
+            };
+
+            var xhr = new XMLHttpRequest();
+            xhr.open(form.method, form.action, true);
+            xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+            xhr.send(JSON.stringify(json));
+
+            window.location.reload()
+        }
+    </script>
+
+</head>
+<body>
+<p th:text="'Welcome, ' + ${name} + '!'" />
+
+<table>
+    <tr th:if="${entries.isEmpty()}">
+        <td colspan="2"> &lt; <i> This journal is empty &gt; </i> </td>
+    </tr>
+    <tr th:each="entry : ${entries}">
+        <td><small><tt><span th:text="${entry.getCreation()}"> Date </span>:</tt></small></td>
+        <td><span th:text="${entry.getBody()}"> Entry </span></td>
+    </tr>
+</table>
+
+<form method="POST" action="http://localhost:8080/entries/append" enctype="application/json">
+    <input type="text" name="body">
+    <input value="Post" id="post" type="button" onclick="submitform()">
+</form>
+</body>
+</html>
