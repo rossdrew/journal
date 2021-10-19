@@ -19,8 +19,8 @@ public class JournalEntry {
         return body;
     }
 
-    public String setBody(){
-        return this.body = body;
+    public void setBody(final String body){
+        this.body = body;
     }
 
     public Date getCreation() {

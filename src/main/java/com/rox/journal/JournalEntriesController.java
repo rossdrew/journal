@@ -1,9 +1,13 @@
 package com.rox.journal;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,8 +17,21 @@ import java.util.stream.Collectors;
 @RequestMapping("/entries")
 @RestController
 public class JournalEntriesController {
-    @Autowired
-    private JournalEntriesService journalEntriesService;
+    private final JournalEntriesService journalEntriesService;
+
+    public JournalEntriesController(JournalEntriesService journalEntriesService) {
+        this.journalEntriesService = journalEntriesService;
+    }
+
+    @Bean
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurerAdapter() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/**").allowedOrigins("*");
+            }
+        };
+    }
 
     @GetMapping()
     public List<JournalEntry> fetchEntries(@RequestParam(value = "contains", required = false) Optional<String> containsString){
