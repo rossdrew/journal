@@ -38,6 +38,10 @@
   border-radius: .20rem;
 }
 
+.discrete {
+  color: #a2a2a2;
+}
+
 .App-link {
   color: #a2a2a2;
 }

@@ -28,19 +28,22 @@ class EntryForm extends Component {
                 body: this.state.jbody,
             })
         })
+        window.location.reload(); //This is less than ideal, it loses focus
     }
 
     render() {
         return <div>
-            <input
-                type="text"
-                name="jbody"
-                placeholder="Entry here..."
-                value={ this.state.jbody }
-                onChange={ this.handleChange }
-            />
+            <form className="entryForm" onSubmit={this.publish}>
+                <input
+                    type="text"
+                    name="jbody"
+                    placeholder="Entry here..."
+                    value={ this.state.jbody }
+                    onChange={ this.handleChange }
+                />
 
-            <button value="Send" onClick={ this.publish }>Publish</button>
+                <button type="submit" value="Send">Publish</button>
+            </form>
         </div>
     }
 }

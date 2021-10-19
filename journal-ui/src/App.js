@@ -1,27 +1,18 @@
 import './App.css';
 import React, {Component} from 'react';
 
-import Entries from './components/entries';
 import EntryForm from './components/entry-form';
+import JournalEntries from "./components/journal-entries";
 
 class App extends Component {
     state = {
-        entries: []
-    }
-
-    componentDidMount() {
-        fetch('http://localhost:8080/entries')
-            .then(res => res.json())
-            .then((data) => {
-                this.setState({ entries: data })
-            })
-            .catch(console.log)
+        lastUpdated: "unknown"
     }
 
     render() {
         return (
             <div className="App-header">
-                <Entries entries={this.state.entries} />
+                <JournalEntries />
                 <EntryForm />
             </div>
         )
