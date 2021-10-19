@@ -25,7 +25,7 @@ public class JournalEntriesController {
 
     @Bean
     public WebMvcConfigurer corsConfigurer() {
-        return new WebMvcConfigurerAdapter() {
+        return new WebMvcConfigurerAdapter() { //Used for SPA to stop CORS issues, what is the correct method
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**").allowedOrigins("*");
