@@ -2,17 +2,6 @@
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
 .App-header {
   background-color: #0f2607;
   min-height: 100vh;
@@ -21,7 +10,7 @@
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: #167700;
+  color: #648a5c;
 }
 
 .card {
@@ -40,6 +29,8 @@
 
 .discrete {
   color: #a2a2a2;
+  font-style: italic;
+  alignment: right;
 }
 
 .App-link {

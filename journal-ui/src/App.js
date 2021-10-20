@@ -1,7 +1,7 @@
 import './App.css';
 import React, {Component} from 'react';
 
-import EntryForm from './components/entry-form';
+import EntryCreationForm from './components/entry-creation-form';
 import JournalEntries from "./components/journal-entries";
 
 class App extends Component {
@@ -13,7 +13,7 @@ class App extends Component {
         return (
             <div className="App-header">
                 <JournalEntries />
-                <EntryForm />
+                <EntryCreationForm />
             </div>
         )
     }

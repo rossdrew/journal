@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 
-class EntryForm extends Component {
+class EntryCreationForm extends Component {
     constructor() {
         super();
         this.state = {
-            jbody: ""
+            draftBody: ""
         };
 
         this.publish = this.publish.bind(this);
@@ -25,7 +25,7 @@ class EntryForm extends Component {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                body: this.state.jbody,
+                body: this.state.draftBody,
             })
         })
         window.location.reload(); //This is less than ideal, it loses focus
@@ -36,9 +36,9 @@ class EntryForm extends Component {
             <form className="entryForm" onSubmit={this.publish}>
                 <input
                     type="text"
-                    name="jbody"
+                    name="draftBody"
                     placeholder="Entry here..."
-                    value={ this.state.jbody }
+                    value={ this.state.draftBody }
                     onChange={ this.handleChange }
                 />
 
@@ -48,4 +48,4 @@ class EntryForm extends Component {
     }
 }
 
-export default EntryForm
+export default EntryCreationForm
