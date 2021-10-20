@@ -12,8 +12,8 @@ Get a list of journal entries
 
 ```json
 {
- body: <text body of journal entry,
- creation: <date and time entry was created>
+ "body": "text body of journal entry",
+ "creation": "date and time entry was created"
 }
 ```
 
@@ -23,7 +23,7 @@ Append a new journal entry.  Creation field will be added automatically and any 
 
 ```json
 {
- body: <text body of journal entry,
+ "body": "text body of journal entry",
 }
 ```
 
