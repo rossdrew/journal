@@ -33,6 +33,14 @@
   alignment: right;
 }
 
+.debug {
+  color: #ffe667;
+  font-family: "Lucida Console", "Menlo", "Monaco", "Courier",
+  monospace;
+  font-size: small;
+}
+
 .App-link {
   color: #a2a2a2;
+  font-family: monospace;
 }
