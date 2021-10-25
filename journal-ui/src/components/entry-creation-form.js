@@ -18,6 +18,7 @@ class EntryCreationForm extends Component {
     }
 
     publish() {
+        //TODO This modifies the browser URL, is there a smoother way to do it?
         fetch('http://localhost:8080/entries/append', {
             method: 'POST',
             headers: {
@@ -28,21 +29,20 @@ class EntryCreationForm extends Component {
                 body: this.state.draftBody,
             })
         })
-        window.location.reload(); //This is less than ideal, it loses focus
+        this.props.requestRefresh()
     }
 
     render() {
         return <div>
             <form className="entryForm" onSubmit={this.publish}>
-                <input
-                    type="text"
-                    name="draftBody"
-                    placeholder="Entry here..."
-                    value={ this.state.draftBody }
-                    onChange={ this.handleChange }
-                />
 
-                <button type="submit" value="Send">Publish</button>
+                <textarea name="draftBody"
+                          value={ this.state.draftBody }
+                          onChange={ this.handleChange }
+                          autoFocus
+                          tabIndex="0" />
+                <br/>
+                <button type="submit" value="Send" tabIndex="1">Publish</button>
             </form>
         </div>
     }
