@@ -20,15 +20,28 @@ class App extends Component {
 
     render() {
         return <div className="App-header">
-            <div className="debug">
-                React v{React.version}, JavaScript v{window.jsver}
-            </div>
+
 
             <JournalEntries key="entry_display" ref={this.entries} />
-            <EntryCreationForm key="entry_creation" ref={this.entrycreation} requestRefresh={() => {
-                this.entries.current?.refresh();
-            }}
-            />
+
+            <div className="navbar fixed-bottom navbar-dark bg-dark">
+                <EntryCreationForm key="entry_creation" ref={this.entrycreation} requestRefresh={() => {
+                    this.entries.current?.refresh();
+                }}
+                />
+
+                {/*Should probably be a component*/}
+                <div className="debug">
+                    React v{React.version} | JavaScript v{window.jsver}
+                </div>
+
+                <div>
+                    <form>
+                        <input id="search" type="text"/>
+                        <button type="submit" value="Send">Filter</button>
+                    </form>
+                </div>
+            </div>
         </div>
     }
 }
