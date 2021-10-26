@@ -1,19 +1,38 @@
 import React, { Component } from 'react'
 
 class JournalEntries extends Component {
-    state = {
-        entries: [],
-        lastUpdated: "unknown"
-    }
+    constructor() {
+        super();
+        this.state = {
+            entries: [],
+            containsFilter: "",
+            lastUpdated: "unknown"
+        }
+        this.entryCardKeyPrefix = "entry-card-"
 
-    entryCardKeyPrefix = "entry-card-"
+        this.filterChange = this.filterChange.bind(this);
+    }
 
     componentDidMount() {
         this.refresh()
+        // This is clearing state so not using filters
+    }
+
+    filterChange({target}){
+        this.setState({
+            [target.name]: target.value
+        });
     }
 
     refresh() {
-        fetch('http://localhost:8080/entries')
+        let url = 'http://localhost:8080/entries?';
+        if (!this.state ||  this.state.length === 0){
+            url = url.concat("contains=" + this.state.containsFilter + "&");
+        }
+
+        console.log("Requesting " + url)
+
+        fetch(url)
             .then(res => res.json())
             .then((data) => {
                 this.setState({
@@ -23,12 +42,29 @@ class JournalEntries extends Component {
             }).catch(console.log);
     }
 
+    publish() {
+        this.refresh()
+    }
+
     render() {
         //Ordered by date, latest at top - why doesn't this work in the refresh method?
         this.state.entries.sort((a, b) => b.creation - a.creation).reverse();
 
         return (
             <div>
+                {/*Should probably be a component*/}
+                <div className="form-group navbar navbar-dark bg-dark fixed-top cflex">
+                    <form onSubmit={this.publish}>
+                        <input className="form-control"
+                               id="search"
+                               type="text"
+                               name="containsFilter"
+                               value={ this.state.containsFilter }
+                               onChange={ this.filterChange } />
+                         <button type="submit" value="Send">Filter</button>
+                    </form>
+                </div>
+
                 <sup className="discrete">Last Updated: {this.state.lastUpdated.toLocaleString()}</sup>
 
                 {this.state.entries.map((entry, index) => (
