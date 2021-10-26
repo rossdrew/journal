@@ -40,6 +40,11 @@
   font-size: small;
 }
 
+.cflex{
+  display: flex;
+  flex-direction: column;
+}
+
 .App-link {
   color: #a2a2a2;
   font-family: monospace;

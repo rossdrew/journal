@@ -20,8 +20,6 @@ class App extends Component {
 
     render() {
         return <div className="App-header">
-
-
             <JournalEntries key="entry_display" ref={this.entries} />
 
             <div className="navbar fixed-bottom navbar-dark bg-dark">
@@ -33,13 +31,6 @@ class App extends Component {
                 {/*Should probably be a component*/}
                 <div className="debug">
                     React v{React.version} | JavaScript v{window.jsver}
-                </div>
-
-                <div>
-                    <form>
-                        <input id="search" type="text"/>
-                        <button type="submit" value="Send">Filter</button>
-                    </form>
                 </div>
             </div>
         </div>

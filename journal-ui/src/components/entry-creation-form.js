@@ -29,19 +29,19 @@ class EntryCreationForm extends Component {
                 body: this.state.draftBody,
             })
         })
-        this.props.requestRefresh()
+       this.props.requestRefresh();
     }
 
     render() {
         return <div>
-            <form className="entryForm" onSubmit={this.publish}>
-
-                <textarea name="draftBody"
+            <form onSubmit={this.publish}>
+                <textarea id="author"
+                          type="text"
+                          name="draftBody"
                           value={ this.state.draftBody }
                           onChange={ this.handleChange }
                           autoFocus
                           tabIndex="0" />
-                <br/>
                 <button type="submit" value="Send" tabIndex="1">Publish</button>
             </form>
         </div>
