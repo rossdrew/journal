@@ -6,11 +6,18 @@ public class JournalEntry {
     private String body;
     private Date creation;
 
-    public JournalEntry(){
-
+    /**
+     * Create an undated JournalEntry
+     */
+    public JournalEntry(final String body){
+        this.body = body;
+        this.creation = null;
     }
 
-    public JournalEntry(String body, Date creationTime){
+    /**
+     * Create a dated journal entry
+     */
+    public JournalEntry(final String body, final Date creationTime){
         this.body = body;
         this.creation = creationTime;
     }
