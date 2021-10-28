@@ -1,6 +1,7 @@
 package com.rox.journal;
 
 import java.util.Date;
+import java.util.Objects;
 
 public class JournalEntry {
     private String body;
@@ -36,5 +37,18 @@ public class JournalEntry {
 
     public void setCreation(Date creation) {
         this.creation = creation;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        JournalEntry that = (JournalEntry) o;
+        return Objects.equals(body, that.body) && Objects.equals(creation, that.creation);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(body, creation);
     }
 }
