@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import HeaderControl from "./foot/headerControl";
 
 class JournalEntries extends Component {
     constructor() {
@@ -52,18 +53,19 @@ class JournalEntries extends Component {
 
         return (
             <div>
-                {/*Should probably be a component*/}
-                <div className="form-group navbar navbar-dark bg-dark fixed-top cflex">
-                    <form onSubmit={this.publish}>
-                        <input className="form-control"
-                               id="search"
-                               type="text"
-                               name="containsFilter"
-                               value={ this.state.containsFilter }
-                               onChange={ this.filterChange } />
-                         <button type="submit" value="Send">Filter</button>
-                    </form>
-                </div>
+                {/*/!*Should probably be a component*!/*/}
+                {/*<div className="form-group navbar navbar-dark bg-dark fixed-top cflex">*/}
+                {/*    <form onSubmit={this.publish}>*/}
+                {/*        <input className="form-control"*/}
+                {/*               id="search"*/}
+                {/*               type="text"*/}
+                {/*               name="containsFilter"*/}
+                {/*               value={ this.state.containsFilter }*/}
+                {/*               onChange={ this.filterChange } />*/}
+                {/*         <button type="submit" value="Send">Filter</button>*/}
+                {/*    </form>*/}
+                {/*</div>*/}
+                <HeaderControl />
 
                 <sup className="discrete">Last Updated: {this.state.lastUpdated.toLocaleString()}</sup>
 
