@@ -26,7 +26,7 @@ class FilterForm extends Component {
                                type="text"
                                name="containsFilter"
                                value={ this.state.containsFilter }
-                               onChange={ this.filterChange } />
+                               onChange={ this.filterChange }/>
                         <button type="submit" value="Send">Filter</button>
                     </form>
                 </div>

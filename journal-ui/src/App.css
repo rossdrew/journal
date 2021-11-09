@@ -25,6 +25,9 @@
   background-clip: border-box;
   border: 1px solid rgba(0,0,0,.125);
   border-radius: .20rem;
+  margin: 0 auto; /* Added */
+  float: none; /* Added */
+  margin-bottom: 10px; /* Added */
 }
 
 .discrete {
@@ -37,7 +40,7 @@
   color: #ffe667;
   font-family: "Lucida Console", "Menlo", "Monaco", "Courier",
   monospace;
-  font-size: small;
+  font-size: x-small;
 }
 
 .cflex{
@@ -48,4 +51,21 @@
 .App-link {
   color: #a2a2a2;
   font-family: monospace;
+}
+
+.text-entry-block {
+  font-size: small;
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+
+body {
+  padding-top: 65px;
+  padding-bottom: 120px;
+}
+@media (max-width: 979px) {
+  body {
+    padding-top: 0px;
+    padding-bottom: 0px;
+  }
 }
