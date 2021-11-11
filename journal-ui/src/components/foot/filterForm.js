@@ -9,16 +9,18 @@ class FilterForm extends Component {
 
     render() {
         return (
-            <form onSubmit={this.props.refresh} id="filterForm">
-                <input className="form-control form-control-sm"
-                       id="filterByContent"
-                       type="text"
-                       placeholder="Filter entries..."
-                       name="containsFilter"
-                       required
-                       value={ this.props.value }
-                       onChange={ this.props.entriesStateChange } />
-            </form>
+            <div onSubmit={this.props.entriesRefresh}>
+                <form id="filterForm">
+                    <input className="form-control form-control-sm"
+                           id="filterByContent"
+                           type="text"
+                           placeholder="Filter entries..."
+                           name="containsFilter"
+                           required
+                           value={ this.props.value }
+                           onChange={ this.props.entriesStateChange } />
+                </form>
+            </div>
         )
     }
 }

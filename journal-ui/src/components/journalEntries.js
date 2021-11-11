@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import HeaderControl from "./foot/headerControl";
+import JournalEntry from "./foot/journalEntry";
 
 class JournalEntries extends Component {
     constructor() {
@@ -49,18 +50,14 @@ class JournalEntries extends Component {
 
         return (
             <div>
-                <HeaderControl entryStateChange={this.stateChange} containsFilter={this.state.containsFilter} refresh={this.refresh} />
+                <HeaderControl entryStateChange={this.stateChange}
+                               containsFilter={this.state.containsFilter}
+                               refresh={this.refresh} />
 
                 <sup className="discrete">Last Updated: {this.state.lastUpdated.toLocaleString()}</sup>
 
                 {this.state.entries.map((entry, index) => (
-                    <div className="card w-75 p-0" key={this.entryCardKeyPrefix+index}>
-                        <div className="card-body" key={this.entryCardKeyPrefix+"body"+index}>
-                            <h5 className="card-title" key={this.entryCardKeyPrefix+"title"+index}>entry {index}</h5>
-                            <h6 className="card-subtitle mb-2 text-muted" key={this.entryCardKeyPrefix+"subtitle"+index}><i>{new Date(entry.creation).toLocaleString()}</i></h6>
-                            <p className="card-text" key={this.entryCardKeyPrefix+"text"+index}>{entry.body}</p>
-                        </div>
-                    </div>
+                    <JournalEntry entry={entry} index={index} />
                 ))}
             </div>
         )

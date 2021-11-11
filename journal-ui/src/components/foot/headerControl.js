@@ -14,7 +14,7 @@ class HeaderControl extends Component {
                         <div className="col-sm-6 " />
 
                         <div className="col-sm-4 ">
-                            <FilterForm entriesStateChange={this.props.entryStateChange} value={this.props.containsFilter} refresh={this.props.refresh} />
+                            <FilterForm entriesStateChange={this.props.entryStateChange} value={this.props.containsFilter} entriesRefresh={this.props.refresh} />
                         </div>
 
                         <div className="col-sm-2 d-flex">

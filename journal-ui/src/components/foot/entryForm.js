@@ -29,7 +29,6 @@ class EntryForm extends Component {
                 body: this.state.draftBody,
             })
         })
-        //this.props.requestRefresh();
     }
 
     render() {
