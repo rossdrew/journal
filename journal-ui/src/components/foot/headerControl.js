@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import FilterForm from "./filterForm";
 
 class HeaderControl extends Component {
     state = {
@@ -7,22 +8,17 @@ class HeaderControl extends Component {
 
     render() {
         return (
-            <nav className="navbar fixed-top navbar-light bg-dark">
+            <nav className="navbar fixed-top navbar-light">
                 <div className="container-fluid">
-                    <div className="row container-fluid ">
-                        <div className="col-sm-10 d-flex justify-content-end">
-                            <form onSubmit={this.publish} id="filterForm">
-                                <input className="form-control form-control-sm"
-                                       id="search"
-                                       type="text"
-                                       placeholder="Filter entries..."
-                                       name="containsFilter"
-                                       required/>
-                            </form>
+                    <div className="row container-fluid d-flex flex-nowrap ">
+                        <div className="col-sm-6 " />
+
+                        <div className="col-sm-4 ">
+                            <FilterForm entriesStateChange={this.props.entryStateChange} value={this.props.containsFilter} refresh={this.props.refresh} />
                         </div>
 
-                        <div className="col-sm-2 d-flex justify-content-end">
-                            <button type="submit" className="btn btn-sm btn-block btn-outline-light" form="filterForm">Filter</button>
+                        <div className="col-sm-2 d-flex">
+                            <button type="submit" className="btn btn-sm btn-block btn-light" form="filterForm">Filter</button>
                         </div>
                     </div>
                 </div>

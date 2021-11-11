@@ -2,10 +2,6 @@ import React, { Component } from 'react'
 import EntryForm from "./entryForm";
 
 class FootControl extends Component {
-    state = {
-        lastUpdated: "unknown"
-    }
-
     render() {
         return (
             <nav className="navbar fixed-bottom navbar-light bg-dark">

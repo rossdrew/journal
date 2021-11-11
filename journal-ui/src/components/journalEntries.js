@@ -11,15 +11,15 @@ class JournalEntries extends Component {
         }
         this.entryCardKeyPrefix = "entry-card-"
 
-        this.filterChange = this.filterChange.bind(this);
+        this.stateChange = this.stateChange.bind(this);
     }
 
     componentDidMount() {
         this.refresh()
-        // This is clearing state so not using filters
+        // This is clearing state so filters not being used
     }
 
-    filterChange({target}){
+    stateChange({target}){
         this.setState({
             [target.name]: target.value
         });
@@ -43,29 +43,13 @@ class JournalEntries extends Component {
             }).catch(console.log);
     }
 
-    publish() {
-        this.refresh()
-    }
-
     render() {
         //Ordered by date, latest at top - why doesn't this work in the refresh method?
         this.state.entries.sort((a, b) => b.creation - a.creation).reverse();
 
         return (
             <div>
-                {/*/!*Should probably be a component*!/*/}
-                {/*<div className="form-group navbar navbar-dark bg-dark fixed-top cflex">*/}
-                {/*    <form onSubmit={this.publish}>*/}
-                {/*        <input className="form-control"*/}
-                {/*               id="search"*/}
-                {/*               type="text"*/}
-                {/*               name="containsFilter"*/}
-                {/*               value={ this.state.containsFilter }*/}
-                {/*               onChange={ this.filterChange } />*/}
-                {/*         <button type="submit" value="Send">Filter</button>*/}
-                {/*    </form>*/}
-                {/*</div>*/}
-                <HeaderControl />
+                <HeaderControl entryStateChange={this.stateChange} containsFilter={this.state.containsFilter} refresh={this.refresh} />
 
                 <sup className="discrete">Last Updated: {this.state.lastUpdated.toLocaleString()}</sup>
 
