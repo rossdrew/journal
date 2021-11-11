@@ -31,6 +31,8 @@ Append a new journal entry.  Creation field will be added automatically and any 
 
 REACT based Single Page Application that allows viewing and adding journal entries.
 
+![Current SPA UI](https://github.com/rossdrew/journal/blob/main/Journal%20v1.png)
+
 ## Journal UI (Fallback)
 
 A basic HTML page that allows viewing (via refresh) entries and adding entries with a form.
