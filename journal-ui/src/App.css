@@ -59,6 +59,18 @@
   padding-bottom: 0px;
 }
 
+.entry-date {
+  font-size: small;
+}
+
+.entry-body {
+  font-size: large;
+}
+
+.entry-meta {
+  font-size: xx-small;
+}
+
 body {
   padding-top: 65px;
   padding-bottom: 120px;

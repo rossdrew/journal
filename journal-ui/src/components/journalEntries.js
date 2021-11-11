@@ -57,7 +57,10 @@ class JournalEntries extends Component {
                 <sup className="discrete">Last Updated: {this.state.lastUpdated.toLocaleString()}</sup>
 
                 {this.state.entries.map((entry, index) => (
-                    <JournalEntry entry={entry} index={index} />
+                    <JournalEntry entry={entry}
+                                  index={index}
+                                  keyPrefix={this.entryCardKeyPrefix + index}
+                                  key={this.entryCardKeyPrefix + index} />
                 ))}
             </div>
         )
