@@ -36,3 +36,7 @@ REACT based Single Page Application that allows viewing/adding journal entries a
 ## Journal UI (Fallback)
 
 A basic HTML page that allows viewing (via refresh) entries and adding entries with a form.
+
+# Thanks
+
+Some collegues have helped me while learning React & front-end development.  So thanks [Al McKinlay](https://github.com/McInkay) and Tim James (link pending) 
