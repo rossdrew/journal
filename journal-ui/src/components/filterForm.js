@@ -16,7 +16,6 @@ class FilterForm extends Component {
                            type="text"
                            placeholder="Filter entries..."
                            name="containsFilter"
-                           required
                            value={ this.props.value }
                            onChange={ this.props.entriesStateChange } />
                 </form>

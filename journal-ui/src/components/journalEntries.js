@@ -57,7 +57,9 @@ class JournalEntries extends Component {
                                containsFilter={this.state.containsFilter}
                                refresh={(event) => this.refresh(event)} />
 
-                <sup className="discrete">Last Updated: {this.state.lastUpdated.toLocaleString()}</sup>
+                <sup className="discrete">
+                    Last Updated: {this.state.lastUpdated.toLocaleString()} {(this.state.containsFilter) ? ", Filtered by '" + this.state.containsFilter + "'" : ""}
+                </sup>
 
                 {this.state.entries.map((entry, index) => (
                     <JournalEntry entry={entry}
