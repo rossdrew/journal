@@ -26,9 +26,12 @@ class JournalEntries extends Component {
         });
     }
 
-    refresh() {
+    refresh(event) {
+        if (event) {
+            event.preventDefault()
+        }
         let url = 'http://localhost:8080/entries?';
-        if (!this.state ||  this.state.length === 0){
+        if (this.state.containsFilter){
             url = url.concat("contains=" + this.state.containsFilter + "&");
         }
 
@@ -52,7 +55,7 @@ class JournalEntries extends Component {
             <div>
                 <HeaderControl entryStateChange={this.stateChange}
                                containsFilter={this.state.containsFilter}
-                               refresh={this.refresh} />
+                               refresh={(event) => this.refresh(event)} />
 
                 <sup className="discrete">Last Updated: {this.state.lastUpdated.toLocaleString()}</sup>
 
