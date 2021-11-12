@@ -55,7 +55,7 @@ class JournalEntries extends Component {
         this.state.entries.sort((a, b) => b.creation - a.creation).reverse();
 
         return (
-            <div>
+            <div className="w-50 entry-listing">
                 <HeaderControl entryStateChange={this.stateChange}
                                containsFilter={this.state.containsFilter}
                                refresh={(event) => this.refresh(event)} />

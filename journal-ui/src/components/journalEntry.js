@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 class JournalEntry extends Component {
     render() {
         return (
-            <div className="card w-75 p-0" key={this.props.keyPrefix+"content"}>
+            <div className="card w-100 p-0" key={this.props.keyPrefix+"content"}>
                 <div className="card-body">
                     <sup key={this.props.keyPrefix+"date"}
                          className="entry-date">
