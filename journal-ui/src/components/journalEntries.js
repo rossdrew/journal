@@ -8,6 +8,7 @@ class JournalEntries extends Component {
         this.state = {
             entries: [],
             containsFilter: "",
+            activeFilter: "",
             lastUpdated: "unknown"
         }
         this.entryCardKeyPrefix = "entry-card-"
@@ -45,6 +46,8 @@ class JournalEntries extends Component {
                     lastUpdated: new Date()
                 })
             }).catch(console.log);
+
+        this.state.activeFilter = this.state.containsFilter;
     }
 
     render() {
@@ -58,7 +61,7 @@ class JournalEntries extends Component {
                                refresh={(event) => this.refresh(event)} />
 
                 <sup className="discrete">
-                    Last Updated: {this.state.lastUpdated.toLocaleString()} {(this.state.containsFilter) ? ", Filtered by '" + this.state.containsFilter + "'" : ""}
+                    Last Updated: {this.state.lastUpdated.toLocaleString()} {(this.state.activeFilter) ? ", Filtered by '" + this.state.activeFilter + "'" : ""}
                 </sup>
 
                 {this.state.entries.map((entry, index) => (
