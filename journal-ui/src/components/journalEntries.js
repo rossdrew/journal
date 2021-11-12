@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import HeaderControl from "./foot/headerControl";
-import JournalEntry from "./foot/journalEntry";
+import HeaderControl from "./headerControl";
+import JournalEntry from "./journalEntry";
 
 class JournalEntries extends Component {
     constructor() {

@@ -29,7 +29,7 @@ Append a new journal entry.  Creation field will be added automatically and any 
 
 ## Journal UI (SPA)
 
-REACT based Single Page Application that allows viewing and adding journal entries.
+REACT based Single Page Application that allows viewing/adding journal entries and filtering what is requested and shown based on body content.
 
 ![Current SPA UI](https://github.com/rossdrew/journal/blob/main/Journal%20v1.png)
 

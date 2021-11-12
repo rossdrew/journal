@@ -2,7 +2,7 @@ import './App.css';
 import React, {Component} from 'react';
 
 import JournalEntries from "./components/journalEntries";
-import FootControl from "./components/foot/footControl";
+import FootControl from "./components/footControl";
 
 class App extends Component {
     state = {
