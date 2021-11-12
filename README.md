@@ -39,4 +39,4 @@ A basic HTML page that allows viewing (via refresh) entries and adding entries w
 
 # Thanks
 
-Some collegues have helped me while learning React & front-end development.  So thanks [Al McKinlay](https://github.com/McInkay) and Tim James (link pending) 
+Some collegues have helped me while learning React & front-end development.  So thanks [Al McKinlay](https://github.com/McInkay) and [Tim James](https://stackoverflow.com/users/177988/tim-b-james?tab=profile) 
