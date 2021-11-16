@@ -6,8 +6,8 @@ class FootControl extends Component {
         return (
             <nav className="navbar fixed-bottom navbar-light bg-dark">
                 <div className="container-fluid"> {/*Grid*/}
-                    <div className="row container-fluid">
-                        <div className="col-sm-8">
+                    <div className="row container-fluid p-0">
+                        <div className="col-sm-8 p-0 w-100">
                             <EntryForm />
                         </div>
 

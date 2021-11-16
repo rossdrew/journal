@@ -33,10 +33,10 @@ class EntryForm extends Component {
 
     render() {
         return (
-            <div onSubmit={this.publish}>
+            <div onSubmit={this.publish} >
                 <form id="journalEntryForm" >
                     <div className="mb-3">
-                        <textarea className="form-control"
+                        <textarea className="form-control text-entry-block"
                                   rows="3"
                                   id="journalEntryInput"
                                   placeholder="Create journal entry..."

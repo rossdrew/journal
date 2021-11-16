@@ -70,6 +70,8 @@ class JournalEntries extends Component {
                                   keyPrefix={this.entryCardKeyPrefix + index}
                                   key={this.entryCardKeyPrefix + index} />
                 ))}
+
+                <div className="continue">.</div>
             </div>
         )
     }
