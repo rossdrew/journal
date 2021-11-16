@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import EntryForm from "./entryForm";
+import JournalEntry from "./journalEntry";
 
 class FootControl extends Component {
     render() {
@@ -13,10 +14,6 @@ class FootControl extends Component {
 
                         <div className="col-sm-4">
                             <button type="submit" className="btn btn-sm btn-block btn-outline-light" form="journalEntryForm">Create</button>
-                            <br/>
-                            <div className="debug">
-                                React v{React.version} | JavaScript v{window.jsver}
-                            </div>
                         </div>
                     </div>
                 </div>

@@ -11,7 +11,11 @@ class HeaderControl extends Component {
             <nav className="navbar fixed-top navbar-light">
                 <div className="container-fluid">
                     <div className="row container-fluid d-flex flex-nowrap ">
-                        <div className="col-sm-6 " />
+                        <div className="col-sm-6 " >
+                            <div className="debug">
+                                React v{React.version} | JavaScript v{window.jsver}
+                            </div>
+                        </div>
 
                         <div className="col-sm-4 ">
                             <FilterForm entriesStateChange={this.props.entryStateChange}
