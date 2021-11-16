@@ -3,14 +3,13 @@
 }
 
 .App-header {
-  background-color: #0f2607;
+  background-color: #323232;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: #648a5c;
 }
 
 .card {
@@ -21,9 +20,9 @@
   flex-direction: column;
   min-width: 300px;
   word-wrap: break-word;
-  background-color: #d4d4d4;
+  background-color: #1a535c;
   background-clip: border-box;
-  border: 1px solid rgba(0,0,0,.125);
+  border: 1px solid rgb(41, 133, 146);
   border-radius: .20rem;
   margin: 0 auto; /* Added */
   float: none; /* Added */
@@ -36,21 +35,16 @@
 }
 
 .discrete {
-  color: #a2a2a2;
+  color: #696969;
   font-style: italic;
   alignment: right;
 }
 
 .debug {
-  color: #ffe667;
+  color: #baff6b;
   font-family: "Lucida Console", "Menlo", "Monaco", "Courier",
   monospace;
   font-size: xx-small;
-}
-
-.cflex{
-  display: flex;
-  flex-direction: column;
 }
 
 .App-link {
@@ -66,10 +60,13 @@
 
 .entry-date {
   font-size: small;
+  font-family: monospace;
+  color: #879a52;
 }
 
 .entry-body {
   font-size: large;
+  color: #bfbfbf;
 }
 
 .entry-meta {
@@ -87,6 +84,18 @@
 .entry-listing {
   padding-top: 45px;
   padding-bottom: 105px;
+}
+
+.entry-preview {
+  position: absolute;
+  z-index: 1001;
+  box-shadow: 6px 6px 5px gray;
+  top: 0px;
+  left: 0px;
+  width: 400px;
+  height: 100px;
+  padding: 0px;
+
 }
 
 @media (max-width: 979px) {
