@@ -9,7 +9,8 @@ class JournalEntries extends Component {
             entries: [],
             containsFilter: "",
             activeFilter: "",
-            lastUpdated: "unknown"
+            lastUpdated: "unknown",
+           entryPreview: null
         }
         this.entryCardKeyPrefix = "entry-card-"
 
@@ -25,6 +26,17 @@ class JournalEntries extends Component {
         this.setState({
             [target.name]: target.value
         });
+    }
+
+    preview(){
+        if (this.state.entryPreview){
+            return <JournalEntry entry={{"body":"test", "creation": "preview"}}
+                          index="PREVIEW"
+                          keyPrefix="preview"
+                          key="preview" />
+        }else{
+            return ""
+        }
     }
 
     refresh(event) {
@@ -47,7 +59,9 @@ class JournalEntries extends Component {
                 })
             }).catch(console.log);
 
-        this.state.activeFilter = this.state.containsFilter;
+        this.setState({
+            activeFilter: this.state.containsFilter
+        })
     }
 
     render() {
@@ -63,6 +77,8 @@ class JournalEntries extends Component {
                 <sup className="discrete">
                     Last Updated: {this.state.lastUpdated.toLocaleString()} {(this.state.activeFilter) ? ", Filtered by '" + this.state.activeFilter + "'" : ""}
                 </sup>
+
+                {this.preview()}
 
                 {this.state.entries.map((entry, index) => (
                     <JournalEntry entry={entry}
