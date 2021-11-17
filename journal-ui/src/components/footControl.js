@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import EntryForm from "./entryForm";
-import JournalEntry from "./journalEntry";
 
 class FootControl extends Component {
     render() {
