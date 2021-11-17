@@ -3,18 +3,7 @@ import React, { Component } from 'react'
 class JournalEntry extends Component {
 
     replaceImplicitLinks(markdownText) {
-        console.log(markdownText)
-        var parsedText = markdownText;
-        let pazLinks = parsedText.match(/PAZ-\d*/g);
-        console.log("Links: " + pazLinks)
-        if (pazLinks && pazLinks.length > 0){
-            for (const link in pazLinks){
-                console.log("Link: " + link)
-                let ticketNumber = link.match(/PAZ-\d*/)
-                console.log("Ticket Number: " + ticketNumber)
-                parsedText = parsedText.replace(ticketNumber,'<a href="https://jira.pingidentity.com/browse/'+ticketNumber+'" target="_blank">'+ticketNumber+'</a>');
-            }
-        }
+        var parsedText = markdownText.replace(/(PAZ-\d*)/g,"<a href='https://jira.pingidentity.com/browse/$1' target='_blank'>$1</a>");
         return parsedText
     }
 
@@ -37,7 +26,7 @@ class JournalEntry extends Component {
                 parsedText = parsedText.replace(el,'<a href="'+url+'" target="_blank">'+linkText+'</a>');
             }
         };
-        return parsedText;
+        return this.replaceImplicitLinks(parsedText);
     }
 
     markdownToHTML(markdownText) {
@@ -49,12 +38,14 @@ class JournalEntry extends Component {
     render() {
         return (
             <div className="card w-100 p-0" key={this.props.keyPrefix+"content"}>
-                <div className="card-body">
-                    <sup key={this.props.keyPrefix+"date"}
+                <div className="card-header">
+                    <div key={this.props.keyPrefix+"date"}
                          className="entry-date">
                         {new Date(this.props.entry.creation).toLocaleString()}
-                    </sup>
+                    </div>
+                </div>
 
+                <div className="card-body">
                     <div key={this.props.keyPrefix+"body"}
                        className="entry-body">
                         {/*XXX Not secure & we need to validate input*/}
