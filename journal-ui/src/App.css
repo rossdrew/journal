@@ -1,19 +1,28 @@
+:root {
+  --base-color: #323232;
+  --plate-background-color: #393b3e;
+  --plate-foreground-color: #b3b3b3;
+  --plate-highlight-color: #696969;
+  --global-highlight-color-1: #8da485;
+  --global-highlight-color-2: #baff6b;
+}
+
 .App {
   text-align: center;
 }
 
 a {
-  color: #8da485;
+  color: var(--global-highlight-color-1);
   text-decoration: none;
 }
 
 a:hover {
-  color: #ffffff;
+  color: var(--plate-foreground-color);
   text-decoration: none;
 }
 
 .App-header {
-  background-color: #323232;
+  background-color: var(--base-color);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -30,13 +39,12 @@ a:hover {
   flex-direction: column;
   min-width: 300px;
   word-wrap: break-word;
-  background-color: #393b3e;
+  background-color: var(--plate-background-color);
   background-clip: border-box;
-  border: 1px solid rgb(95, 95, 95);
+  border: 1px solid var(--plate-highlight-color);
   border-radius: .20rem;
-  margin: 0 auto; /* Added */
   float: none; /* Added */
-  margin-bottom: 10px; /* Added */
+  margin: 0 auto 10px; /* Added */
 }
 
 .continue {
@@ -45,20 +53,20 @@ a:hover {
 }
 
 .discrete {
-  color: #696969;
+  color: var(--plate-highlight-color);
   font-style: italic;
   alignment: right;
 }
 
 .debug {
-  color: #baff6b;
+  color: var(--global-highlight-color-2);
   font-family: "Lucida Console", "Menlo", "Monaco", "Courier",
   monospace;
   font-size: xx-small;
 }
 
 .App-link {
-  color: #a2a2a2;
+  color: var(--plate-highlight-color);
   font-family: monospace;
 }
 
@@ -71,12 +79,12 @@ a:hover {
 .entry-date {
   font-size: small;
   font-family: monospace;
-  color: #879a52;
+  color: var(--global-highlight-color-2);
 }
 
 .entry-body {
   font-size: small;
-  color: #bfbfbf;
+  color: var(--plate-foreground-color);
 }
 
 .entry-meta {
@@ -99,7 +107,7 @@ a:hover {
 .entry-preview {
   position: absolute;
   z-index: 1001;
-  box-shadow: 6px 6px 5px gray;
+  box-shadow: 6px 6px 5px var(--base-color);
   top: 0px;
   left: 0px;
   width: 400px;
