@@ -2,26 +2,49 @@ import './App.css';
 import React, {Component} from 'react';
 
 import JournalEntries from "./components/journalEntries";
-import FootControl from "./components/footControl";
 
 class App extends Component {
     state = {
         lastUpdated: "unknown"
     }
 
-    entries: React.RefObject<JournalEntries>;
+    testCanvasDrawing(){
+        const canvas = this.refs.outbox
+        const ctx = canvas.getContext("2d")
+
+        ctx.drawImage(canvas, 0, 0)
+        ctx.font = "12px Courier"
+        ctx.fillText("OUTBOX", 210, 75)
+
+        ctx.beginPath();
+        ctx.moveTo(10, 10);
+        ctx.lineTo(100, 20);
+        ctx.lineTo(10, 40);
+        ctx.strokeStyle = 'white';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+    }
+
+    componentDidMount() {
+       //this.testCanvasDrawing();
+    }
 
     constructor(props: any){
         super(props);
 
-        this.child = React.createRef();
+        this.updateDraft = (newDraft) => {
+            this.setState(state => ({
+                draftEntry: newDraft
+            }))
+        }
     }
+
 
     render() {
         return (
-            <div className="App-header">
+            <div className="App-header " >
                 <JournalEntries key="entry_display" ref={this.entries} />
-                <FootControl />
+                {/*<canvas ref="outbox" />*/}
             </div>
         )
     }

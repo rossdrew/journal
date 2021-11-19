@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import HeaderControl from "./headerControl";
 import JournalEntry from "./journalEntry";
+import FootControl from "./footControl";
 
 class JournalEntries extends Component {
     constructor() {
@@ -69,25 +70,28 @@ class JournalEntries extends Component {
         this.state.entries.sort((a, b) => b.creation - a.creation).reverse();
 
         return (
-            <div className="w-50 entry-listing">
-                <HeaderControl entryStateChange={this.stateChange}
-                               containsFilter={this.state.containsFilter}
-                               refresh={(event) => this.refresh(event)} />
+            <div className="w-100 d-flex justify-content-around">
+                <div className="w-50 entry-listing">
+                    <HeaderControl entryStateChange={this.stateChange}
+                                   containsFilter={this.state.containsFilter}
+                                   refresh={(event) => this.refresh(event)} />
 
-                <sup className="discrete">
-                    Last Updated: {this.state.lastUpdated.toLocaleString()} {(this.state.activeFilter) ? ", Filtered by '" + this.state.activeFilter + "'" : ""}
-                </sup>
+                    <sup className="discrete">
+                        Last Updated: {this.state.lastUpdated.toLocaleString()} {(this.state.activeFilter) ? ", Filtered by '" + this.state.activeFilter + "'" : ""}
+                    </sup>
 
-                {this.preview()}
+                    {this.preview()}
 
-                {this.state.entries.map((entry, index) => (
-                    <JournalEntry entry={entry}
-                                  index={index}
-                                  keyPrefix={this.entryCardKeyPrefix + index}
-                                  key={this.entryCardKeyPrefix + index} />
-                ))}
+                    {this.state.entries.map((entry, index) => (
+                        <JournalEntry entry={entry}
+                                      index={index}
+                                      keyPrefix={this.entryCardKeyPrefix + index}
+                                      key={this.entryCardKeyPrefix + index} />
+                    ))}
 
-                <div className="continue">.</div>
+                    <div className="continue">.</div>
+                </div>
+                <FootControl />
             </div>
         )
     }

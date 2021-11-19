@@ -12,6 +12,7 @@ class EntryForm extends Component {
     }
 
     handleChange({ target }) {
+        this.context = target.value
         this.setState({
             [target.name]: target.value
         });
