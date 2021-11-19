@@ -11,6 +11,8 @@ class JournalEntry extends Component {
      * Replace all markdown of the form `[text](url)` with HTML links
      * of the form `<a href='url'>text</a>`
      *
+     *  WARNING: This breaks with '[Link}(http://www.google.com)'
+     *
      * @param markdownText text containing markdown links
      * @returns 'markdownText' with markdown links replaced with HTML
      */
