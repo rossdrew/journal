@@ -14,7 +14,7 @@ public class InterfaceController {
     public String greeting(Model model) {
         model.addAttribute("name", "Ross");
         model.addAttribute("entries", journalEntriesService.list());
-        model.addAllAttributes(journalEntriesService.orderedList());
+        model.addAllAttributes(journalEntriesService.orderedEntryMap());
         return "journal";
     }
 }
