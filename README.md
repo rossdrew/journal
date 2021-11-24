@@ -6,9 +6,14 @@ An app to track your day.
 
 A RESTful API for CRUD of Journal Entries in Java.
 
-`GET /entries?[contains="journal"]`
+`GET /entries?[contains="journal"][start=0][limit=10]`
 
-Get a list of journal entries, optionally filtered by whether the `body` `contains` a given string. 
+Get a list of journal entries. Optionally 
+ - filtered by whether the `body` `contains` a given string.
+ - only return `limit` entries
+ - only return entries from `start` index
+
+Combining `start` and `limit` therefore gives us some paging functionality.
 
 ```json
 {
