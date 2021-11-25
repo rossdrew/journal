@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -23,10 +24,15 @@ public class JournalEntriesService {
 
     public List<JournalEntry> list(final EntriesQuery query){
         //TODO Paging information, PagedList<JournalEntry> perhaps
+        if (testEntries.size() <= query.getStart())
+            return Collections.emptyList();
+        int limit = query.getSize().orElse(testEntries.size());
+        if (limit > testEntries.size())
+            limit = testEntries.size();
 
         return testEntries.subList(
                     query.getStart(),
-                    query.getSize().orElse(testEntries.size())
+                    limit
                 ).stream().filter(e -> {
             return e.getBody().contains(query.getBodyContains());
         }).collect(Collectors.toList());
