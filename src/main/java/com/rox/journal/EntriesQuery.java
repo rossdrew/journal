@@ -36,10 +36,12 @@ public class EntriesQuery {
     }
 
     public EntriesQuery startingAtIndex(final Optional<Integer> index){
-        return new EntriesQuery(bodyContains, index.orElse(0), size);
+        final Optional<Integer> sanitizedIndex = (index.isPresent() && index.get() < 0) ? Optional.of(0) : index;
+        return new EntriesQuery(bodyContains, sanitizedIndex.orElse(0), size);
     }
 
     public EntriesQuery limitedTo(final Optional<Integer> size){
-        return new EntriesQuery(bodyContains, start, size);
+        final Optional<Integer> sanitizedSize = (size.isPresent() && size.get() < 0) ? Optional.of(0) : size;
+        return new EntriesQuery(bodyContains, start, sanitizedSize);
     }
 }
