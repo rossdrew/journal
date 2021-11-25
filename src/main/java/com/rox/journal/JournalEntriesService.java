@@ -26,13 +26,13 @@ public class JournalEntriesService {
         //TODO Paging information, PagedList<JournalEntry> perhaps
         if (testEntries.size() <= query.getStart())
             return Collections.emptyList();
-        int limit = query.getSize().orElse(testEntries.size());
+        int limit = query.getSize().orElse(testEntries.size() - query.getStart());
         if (limit > testEntries.size())
             limit = testEntries.size();
 
         return testEntries.subList(
                     query.getStart(),
-                    limit
+                    query.getStart() + limit
                 ).stream().filter(e -> {
             return e.getBody().contains(query.getBodyContains());
         }).collect(Collectors.toList());

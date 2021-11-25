@@ -88,6 +88,7 @@ public class JournalEntriesServiceTest {
         createTestEntries();
         final List<JournalEntry> subZero = service.list(EntriesQuery.all().startingAtIndex(Optional.of(-1)));
         assertEquals(testEntryCount, subZero.size(),"Invalid start point should default to start of data");
+        assertEquals("Journal entry No.0", subZero.get(0).getBody());
     }
 
     @Test
@@ -95,6 +96,7 @@ public class JournalEntriesServiceTest {
         createTestEntries();
         final List<JournalEntry> unspecified = service.list(EntriesQuery.all().startingAtIndex(Optional.empty()));
         assertEquals(testEntryCount, unspecified.size(),"No specified start point should default to start of data");
+        assertEquals("Journal entry No.0", unspecified.get(0).getBody());
     }
 
     @Test
@@ -102,19 +104,22 @@ public class JournalEntriesServiceTest {
         createTestEntries();
         final List<JournalEntry> zeroSpecified = service.list(EntriesQuery.all().startingAtIndex(Optional.of(0)));
         assertEquals(testEntryCount, zeroSpecified.size(), "Start point of 0 should be the start of data");
+        assertEquals("Journal entry No.0", zeroSpecified.get(0).getBody());
     }
 
     @Test
     void listWithGreaterThanZeroStartIndex(){
         createTestEntries();
+        final int decrement = 1;
         final List<JournalEntry> oneSpecified = service.list(EntriesQuery.all().startingAtIndex(Optional.of(1)));
-        assertEquals(testEntryCount -1, oneSpecified.size(), "Starting from 1 should return max-1 entries");
+        assertEquals(testEntryCount - decrement, oneSpecified.size(), "Starting from "+decrement+" should return max-"+decrement+" entries");
+        assertEquals("Journal entry No."+decrement, oneSpecified.get(0).getBody());
     }
 
     @Test
     void listWithLessThanMaxStartIndex(){
         createTestEntries();
-        final List<JournalEntry> subMaxSpecified = service.list(EntriesQuery.all().startingAtIndex(Optional.of(testEntryCount -2)));
+        final List<JournalEntry> subMaxSpecified = service.list(EntriesQuery.all().startingAtIndex(Optional.of(testEntryCount - 2)));
         assertEquals(2, subMaxSpecified.size(), "Some number less than max should return max-n entries");
     }
 
@@ -129,7 +134,7 @@ public class JournalEntriesServiceTest {
     @Test
     void listWithGreaterThanMaxStartIndex(){
         createTestEntries();
-        final List<JournalEntry> superMaxSpecified = service.list(EntriesQuery.all().startingAtIndex(Optional.of(testEntryCount +1)));
+        final List<JournalEntry> superMaxSpecified = service.list(EntriesQuery.all().startingAtIndex(Optional.of(testEntryCount + 1)));
         //XXX Should we return error or empty list?
         assertEquals(0, superMaxSpecified.size(), "Starting higher than should return no entries");
     }
@@ -175,6 +180,28 @@ public class JournalEntriesServiceTest {
 
         final List<JournalEntry> superMax = service.list(EntriesQuery.all().limitedTo(Optional.of(testEntryCount +1)));
         assertEquals(10, superMax.size(), "Limit greater than number of entries should return all entries");
+    }
+
+    @Test
+    void listSpecifyingRangeOfZeroSize() {
+        createTestEntries();
+        final List<JournalEntry> superMax = service.list(
+                EntriesQuery.all()
+                        .startingAtIndex(Optional.of(4))
+                        .limitedTo(Optional.of(0)));
+        assertEquals(0, superMax.size(), "Limit of zero should always return 0, no matter the index");
+    }
+
+    @Test
+    void listSpecifyingRangeOfNonZeroSize() {
+        createTestEntries();
+        final int startIndex = 4;
+        final List<JournalEntry> superMax = service.list(
+                EntriesQuery.all()
+                        .startingAtIndex(Optional.of(startIndex))
+                        .limitedTo(Optional.of(1)));
+        assertEquals(1, superMax.size(), "Range of 1 should return 1 item at the correct index");
+        assertEquals("Journal entry No."+startIndex, superMax.get(0).getBody());
     }
 
 //    @Test
