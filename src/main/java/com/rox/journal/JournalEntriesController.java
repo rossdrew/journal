@@ -20,7 +20,7 @@ public class JournalEntriesController {
         this.journalEntriesService = journalEntriesService;
         /* DEBUG */
         for (int i=0; i<25; i++) {
-            journalEntriesService.add(new JournalEntry("This is TEST journal entry No." + i));
+            journalEntriesService.append(new JournalEntry("This is TEST journal entry No." + i));
             Thread.sleep(10);
         }
         /* /DEBUG */
@@ -57,7 +57,7 @@ public class JournalEntriesController {
 
     @PostMapping("/append")
     public String createEntry(@RequestBody JournalEntry entry){
-        journalEntriesService.add(entry);
+        journalEntriesService.append(entry);
         return entry.getBody();
     }
 }

@@ -17,7 +17,7 @@ public class JournalEntriesService {
     //TODO This becomes a database at some point
     private List<JournalEntry> testEntries = new ArrayList<>();
 
-    public boolean add(JournalEntry entry){
+    public boolean append(JournalEntry entry){
         entry.setCreation(new java.util.Date());
         return testEntries.add(entry);
     }
