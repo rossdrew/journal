@@ -1,5 +1,6 @@
 package com.rox.journal;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.util.Date;
@@ -8,6 +9,18 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class JournalEntryTest {
+    final Date testDate = new Date();
+
+    @BeforeAll
+    public void setup(){
+        try {
+            //Make sure the test date is distinguishable from other dates created during test
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Test
     public void testMinimalCreation(){
         final String testContent = "This is a test";
@@ -42,7 +55,6 @@ public class JournalEntryTest {
 
     @Test
     public void testInequality(){
-        final Date testDate = new Date();
         final JournalEntry entryA = new JournalEntry("This is a test", testDate);
         final JournalEntry differentContentEntry = new JournalEntry("This is not the same", testDate);
         final JournalEntry differentDateEntry = new JournalEntry("This is a test", new Date());

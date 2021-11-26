@@ -38,8 +38,10 @@ public class JournalEntriesControllerTest {
 
         final int createdEntryCount = 10;
 
+        //TODO Something is creating 24 entries before we get here?!?
+
         for (int entryIndex=0; entryIndex<createdEntryCount; entryIndex++){
-            final JournalEntry entry = new JournalEntry("This is entry No." + entryIndex, new java.util.Date());
+            final JournalEntry entry = new JournalEntry("Entry No." + entryIndex, new java.util.Date());
             restTemplate.postForObject(appendUrl, entry, String.class);
         }
 
@@ -51,4 +53,6 @@ public class JournalEntriesControllerTest {
 
         assertEquals(createdEntryCount, entries.length);
     }
+
+    //TODO filtering tests
 }

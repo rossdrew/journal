@@ -21,6 +21,11 @@ public class JournalEntriesServiceTest {
     void createTestEntries(){
         for (int entryIndex = 0; entryIndex< 10; entryIndex++){
             service.append(new JournalEntry("Journal entry No." + entryIndex));
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                System.out.println("Thread sleep failed, who cares?");
+            }
         }
     }
 
@@ -196,24 +201,27 @@ public class JournalEntriesServiceTest {
     void listSpecifyingRangeOfNonZeroSize() {
         createTestEntries();
         final int startIndex = 4;
-        final List<JournalEntry> superMax = service.list(
+        final int size = 1;
+        final List<JournalEntry> range = service.list(
                 EntriesQuery.all()
                         .startingAtIndex(Optional.of(startIndex))
-                        .limitedTo(Optional.of(1)));
-        assertEquals(1, superMax.size(), "Range of 1 should return 1 item at the correct index");
-        assertEquals("Journal entry No."+startIndex, superMax.get(0).getBody());
+                        .limitedTo(Optional.of(size)));
+        assertEquals(size, range.size(), "Range of " + size + " should return " + size + " item at the correct index (" + startIndex + ")");
+        assertEquals("Journal entry No."+startIndex, range.get(0).getBody());
     }
 
-//    @Test
-//    void orderedList() {
-//        final int creationCount = 10;
-//        final JournalEntriesService service = new JournalEntriesService();
-//        for (int i=0; i<creationCount; i++){
-//            service.add(new JournalEntry("Journal entry No." + i));
-//        }
-//
-//        final Map<String, JournalEntry> entries = service.orderedEntryMap();
-//
-//        //TODO how do I test that the date is sequential for i -> i+1
-//    }
+    @Test
+    void listWithAllFiltersTurnedOn() {
+        createTestEntries();
+        final int startIndex = 5;
+        final int size = 4;
+        final String searchText = "8";
+        final List<JournalEntry> uberFiltered = service.list(
+                EntriesQuery.all()
+                        .startingAtIndex(Optional.of(startIndex))
+                        .limitedTo(Optional.of(size))
+                        .whereBodyContains(Optional.of(searchText)));
+        assertEquals(1, uberFiltered.size(), "Expected only 1 item between " + startIndex + " and " + (startIndex+size) + " containing '" + searchText + "'");
+        assertEquals("Journal entry No." + searchText, uberFiltered.get(0).getBody());
+    }
 }
