@@ -8,23 +8,6 @@ class App extends Component {
         lastUpdated: "unknown"
     }
 
-    testCanvasDrawing(){
-        const canvas = this.refs.outbox
-        const ctx = canvas.getContext("2d")
-
-        ctx.drawImage(canvas, 0, 0)
-        ctx.font = "12px Courier"
-        ctx.fillText("OUTBOX", 210, 75)
-
-        ctx.beginPath();
-        ctx.moveTo(10, 10);
-        ctx.lineTo(100, 20);
-        ctx.lineTo(10, 40);
-        ctx.strokeStyle = 'white';
-        ctx.lineWidth = 1;
-        ctx.stroke();
-    }
-
     componentDidMount() {
        //this.testCanvasDrawing();
     }
@@ -42,9 +25,8 @@ class App extends Component {
 
     render() {
         return (
-            <div className="App-header " >
+            <div className="App-header" >
                 <JournalEntries key="entry_display" ref={this.entries} />
-                {/*<canvas ref="outbox" />*/}
             </div>
         )
     }
