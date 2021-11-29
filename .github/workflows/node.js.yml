@@ -26,7 +26,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-        cache-dependency-path: perfanalytics-api/package-lock.json
+        cache-dependency-path: node_modules/package-lock.json
     - run: cd journal-ui
     - run: npm ci
     - run: npm run build --if-present
