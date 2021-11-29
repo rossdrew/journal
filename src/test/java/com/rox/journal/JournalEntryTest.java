@@ -12,7 +12,7 @@ public class JournalEntryTest {
     final Date testDate = new Date();
 
     @BeforeAll
-    public void setup(){
+    public static void setup(){
         try {
             //Make sure the test date is distinguishable from other dates created during test
             Thread.sleep(1000);
