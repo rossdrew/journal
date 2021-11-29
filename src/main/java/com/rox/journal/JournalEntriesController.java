@@ -19,10 +19,10 @@ public class JournalEntriesController {
     public JournalEntriesController(JournalEntriesService journalEntriesService) throws InterruptedException {
         this.journalEntriesService = journalEntriesService;
         /* DEBUG */
-        for (int i=0; i<25; i++) {
-            journalEntriesService.append(new JournalEntry("This is TEST journal entry No." + i));
-            Thread.sleep(10);
-        }
+//        for (int i=0; i<25; i++) {
+//            journalEntriesService.append(new JournalEntry("This is TEST journal entry No." + i));
+//            Thread.sleep(10);
+//        }
         /* /DEBUG */
     }
 

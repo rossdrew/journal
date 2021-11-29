@@ -7,7 +7,6 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.ResponseEntity;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -19,7 +18,7 @@ public class JournalEntriesControllerTest {
     private TestRestTemplate restTemplate;
 
     @Test
-    public void listingIsEmpty() throws Exception {
+    public void listingIsEmpty() {
         final String url = "http://localhost:" + port + "/entries";
 
         final ResponseEntity<JournalEntry[]> r =
@@ -28,7 +27,7 @@ public class JournalEntriesControllerTest {
                         JournalEntry[].class);
         final JournalEntry[] entries = r.getBody();
 
-        assertThat(entries.length == 0);
+        assertEquals(0, entries.length);
     }
 
     @Test
@@ -38,20 +37,18 @@ public class JournalEntriesControllerTest {
 
         final int createdEntryCount = 10;
 
-        //TODO Something is creating 24 entries before we get here?!?
-
         for (int entryIndex=0; entryIndex<createdEntryCount; entryIndex++){
             final JournalEntry entry = new JournalEntry("Entry No." + entryIndex, new java.util.Date());
             restTemplate.postForObject(appendUrl, entry, String.class);
         }
 
-        final ResponseEntity<JournalEntry[]> r =
+        final ResponseEntity<JournalEntry[]> a =
                 restTemplate.getForEntity(
                         fetchUrl,
                         JournalEntry[].class);
-        final JournalEntry[] entries = r.getBody();
+        final JournalEntry[] entriesAfter = a.getBody();
 
-        assertEquals(createdEntryCount, entries.length);
+        assertEquals(createdEntryCount, entriesAfter.length);
     }
 
     //TODO filtering tests

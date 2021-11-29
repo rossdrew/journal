@@ -12,6 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class JournalEntriesServiceTest {
     JournalEntriesService service = new JournalEntriesService();
     final int testEntryCount = 10;
+    final String TEST_ENTRY_PREFIX = "Test Entry No.";
 
     @BeforeEach
     void setup(){
@@ -20,7 +21,7 @@ public class JournalEntriesServiceTest {
 
     void createTestEntries(){
         for (int entryIndex = 0; entryIndex< 10; entryIndex++){
-            service.append(new JournalEntry("Journal entry No." + entryIndex));
+            service.append(new JournalEntry(TEST_ENTRY_PREFIX + entryIndex));
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
@@ -77,7 +78,7 @@ public class JournalEntriesServiceTest {
     @Test
     void listWithBodyContentFilterThatAppliesToAllEntries() {
         createTestEntries();
-        final List<JournalEntry> appliesToAll = service.list(EntriesQuery.all().whereBodyContains(Optional.of("Journal")));
+        final List<JournalEntry> appliesToAll = service.list(EntriesQuery.all().whereBodyContains(Optional.of(TEST_ENTRY_PREFIX.substring(3,6))));
         assertEquals(testEntryCount, appliesToAll.size());
     }
 
@@ -93,7 +94,7 @@ public class JournalEntriesServiceTest {
         createTestEntries();
         final List<JournalEntry> subZero = service.list(EntriesQuery.all().startingAtIndex(Optional.of(-1)));
         assertEquals(testEntryCount, subZero.size(),"Invalid start point should default to start of data");
-        assertEquals("Journal entry No.0", subZero.get(0).getBody());
+        assertEquals(TEST_ENTRY_PREFIX+"0", subZero.get(0).getBody());
     }
 
     @Test
@@ -101,7 +102,7 @@ public class JournalEntriesServiceTest {
         createTestEntries();
         final List<JournalEntry> unspecified = service.list(EntriesQuery.all().startingAtIndex(Optional.empty()));
         assertEquals(testEntryCount, unspecified.size(),"No specified start point should default to start of data");
-        assertEquals("Journal entry No.0", unspecified.get(0).getBody());
+        assertEquals(TEST_ENTRY_PREFIX+"0", unspecified.get(0).getBody());
     }
 
     @Test
@@ -109,7 +110,7 @@ public class JournalEntriesServiceTest {
         createTestEntries();
         final List<JournalEntry> zeroSpecified = service.list(EntriesQuery.all().startingAtIndex(Optional.of(0)));
         assertEquals(testEntryCount, zeroSpecified.size(), "Start point of 0 should be the start of data");
-        assertEquals("Journal entry No.0", zeroSpecified.get(0).getBody());
+        assertEquals(TEST_ENTRY_PREFIX+"0", zeroSpecified.get(0).getBody());
     }
 
     @Test
@@ -118,7 +119,7 @@ public class JournalEntriesServiceTest {
         final int decrement = 1;
         final List<JournalEntry> oneSpecified = service.list(EntriesQuery.all().startingAtIndex(Optional.of(1)));
         assertEquals(testEntryCount - decrement, oneSpecified.size(), "Starting from "+decrement+" should return max-"+decrement+" entries");
-        assertEquals("Journal entry No."+decrement, oneSpecified.get(0).getBody());
+        assertEquals(TEST_ENTRY_PREFIX+decrement, oneSpecified.get(0).getBody());
     }
 
     @Test
@@ -207,7 +208,7 @@ public class JournalEntriesServiceTest {
                         .startingAtIndex(Optional.of(startIndex))
                         .limitedTo(Optional.of(size)));
         assertEquals(size, range.size(), "Range of " + size + " should return " + size + " item at the correct index (" + startIndex + ")");
-        assertEquals("Journal entry No."+startIndex, range.get(0).getBody());
+        assertEquals(TEST_ENTRY_PREFIX+startIndex, range.get(0).getBody());
     }
 
     @Test
@@ -222,6 +223,6 @@ public class JournalEntriesServiceTest {
                         .limitedTo(Optional.of(size))
                         .whereBodyContains(Optional.of(searchText)));
         assertEquals(1, uberFiltered.size(), "Expected only 1 item between " + startIndex + " and " + (startIndex+size) + " containing '" + searchText + "'");
-        assertEquals("Journal entry No." + searchText, uberFiltered.get(0).getBody());
+        assertEquals(TEST_ENTRY_PREFIX + searchText, uberFiltered.get(0).getBody());
     }
 }
