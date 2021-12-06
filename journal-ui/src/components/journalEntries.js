@@ -53,9 +53,9 @@ class JournalEntries extends Component {
 
         fetch(url)
             .then(res => res.json())
-            .then((data) => {
+            .then((pagedData) => {
                 this.setState({
-                    entries: data,
+                    entries: pagedData.data,
                     lastUpdated: new Date()
                 })
             }).catch(console.log);
