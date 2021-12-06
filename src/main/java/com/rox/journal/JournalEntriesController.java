@@ -41,29 +41,9 @@ public class JournalEntriesController {
      * @param start only show entries from this index forward
      * @param limit only show this number of entries
      *
-     * @return a list of entries with optional filtering
-     */
-    @GetMapping()
-    public List<JournalEntry> fetchEntries(
-            @RequestParam(value = "contains", required = false) Optional<String> containsString,
-            @RequestParam(value = "start", required = false) Optional<Integer> start,
-            @RequestParam(value = "limit", required = false) Optional<Integer> limit
-    ){
-        return journalEntriesService.list(
-                EntriesQuery.all()
-                            .whereBodyContains(containsString)
-                            .startingAtIndex(start)
-                            .limitedTo(limit));
-    }
-
-    /**
-     * @param containsString filter entries by those whose bodies contain this string
-     * @param start only show entries from this index forward
-     * @param limit only show this number of entries
-     *
      * @return a {@link PageWrapper paged} list of entries with optional filtering
      */
-    @GetMapping("/paged")
+    @GetMapping()
     public PageWrapper<JournalEntry> fetchPagedEntries(
             @RequestParam(value = "contains", required = false) Optional<String> containsString,
             @RequestParam(value = "start", required = false) Optional<Integer> start,

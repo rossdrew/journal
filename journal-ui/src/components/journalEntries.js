@@ -8,6 +8,7 @@ class JournalEntries extends Component {
         super();
         this.state = {
             entries: [],
+            entriesPagingHeader: [],
             containsFilter: "",
             activeFilter: "",
             lastUpdated: "unknown",
@@ -56,6 +57,11 @@ class JournalEntries extends Component {
             .then((pagedData) => {
                 this.setState({
                     entries: pagedData.data,
+                    entriesPagingHeader: {
+                        size: pagedData.size,
+                        limit: pagedData.limit,
+                        start: pagedData.startIndex
+                    },
                     lastUpdated: new Date()
                 })
             }).catch(console.log);
@@ -63,6 +69,14 @@ class JournalEntries extends Component {
         this.setState({
             activeFilter: this.state.containsFilter
         })
+    }
+
+    entriesRemaining(){
+        if (this.state.entriesPagingHeader.size > (this.state.entriesPagingHeader.start + this.state.entriesPagingHeader.limit)){
+            return true
+        }else {
+            return false
+        }
     }
 
     render() {
@@ -89,7 +103,9 @@ class JournalEntries extends Component {
                                       key={this.entryCardKeyPrefix + index} />
                     ))}
 
-                    <div className="continue">.</div>
+                    <div className="continue">
+                        { this.entriesRemaining() ? "..." : "."}
+                    </div>
                 </div>
                 <FootControl />
             </div>
