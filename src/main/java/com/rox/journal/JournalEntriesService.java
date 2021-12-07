@@ -31,9 +31,15 @@ public class JournalEntriesService {
             return e.getBody().contains(query.getBodyContains());
         }).collect(Collectors.toList());
 
-        return PageWrapper.around(results)
+        PageWrapper<JournalEntry> page =
+                PageWrapper.around(results)
                           .startingAt(query.getStart())
-                          .limitedTo(limit)
                           .fromPoolOf(testEntries.size());
+
+        if (query.getSize().isPresent()){
+            page = page.limitedTo(query.getSize().get());
+        }
+
+        return page;
     }
 }

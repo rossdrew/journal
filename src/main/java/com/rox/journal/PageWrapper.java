@@ -49,7 +49,7 @@ public class PageWrapper<DataType> {
      * @return a new {@link PageWrapper} with the attributes of the source {@link PageWrapper} with limit set to given value
      */
     public <DataType> PageWrapper<DataType> limitedTo(final int count){
-        if (count > data.size())
+        if (data.size() > count)
             throw new RuntimeException("Data is larger than the defined size limit we tried to set"); //XXX Custom exception required
 
         return new PageWrapper(Optional.empty(), Optional.of(Math.max(count, 0)), startIndex, data);
