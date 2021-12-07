@@ -7,12 +7,26 @@ class JournalEntries extends Component {
     constructor() {
         super();
         this.state = {
-            entries: [],
-            entriesPagingHeader: [],
-            containsFilter: "",
-            activeFilter: "",
-            lastUpdated: "unknown",
-           entryPreview: null
+             entryBlockSize: null, //Size of entries blocks to request
+             entryBufferBlocks: 0, //Number of blocks each side of the displayed one to buffer
+             previousEntries: [],  //Buffer blocks backwards in time
+             nextEntries: [],      //Buffer blocks forwards in time
+
+             entries: [],
+             entriesPagingHeader: {
+                 size: null,
+                 limit: null,
+                 start: null
+             },
+
+             containsFilter: "",
+             entryStartIndex: null,
+             entryLimit: null,
+
+             activeFilter: "",
+             lastUpdated: "unknown",
+
+             entryPreview: null
         }
         this.entryCardKeyPrefix = "entry-card-"
 
@@ -21,8 +35,27 @@ class JournalEntries extends Component {
 
     componentDidMount() {
         this.refresh()
-        // This is clearing state so filters not being used
+        document.addEventListener('scroll', this.trackScrolling);
     }
+
+    isBottomOf(element) {
+        if (element)
+            return element.getBoundingClientRect().bottom <= window.innerHeight - 100;
+    }
+
+    componentWillUnmount() {
+        document.removeEventListener('scroll', this.trackScrolling);
+    }
+
+    trackScrolling = () => {
+        const wrappedElement = document.getElementById('infiniteScroller');
+        if (this.isBottomOf(wrappedElement)) {
+            console.log('Edge of loaded entries reached...');
+            document.removeEventListener('scroll', this.trackScrolling);
+            //TODO Load new entries
+            document.addEventListener('scroll', this.trackScrolling);
+        }
+    };
 
     stateChange({target}){
         this.setState({
@@ -41,30 +74,48 @@ class JournalEntries extends Component {
         }
     }
 
+    getEntries({start, limit, contains}){
+        let url = 'http://localhost:8080/entries?';
+        if (contains) url = url.concat("contains=" + contains + "&");
+        if (start) url = url.concat("start=" + start + "&");
+        if (limit) url = url.concat("limit=" + limit + "&");
+
+        return fetch(url)
+            .then(res => res.json())
+            .catch(console.log);
+    }
+
     refresh(event) {
         if (event) {
             event.preventDefault()
         }
-        let url = 'http://localhost:8080/entries?';
-        if (this.state.containsFilter){
-            url = url.concat("contains=" + this.state.containsFilter + "&");
-        }
 
-        console.log("Requesting " + url)
+        this.getEntries({
+            contains : this.state.containsFilter,
+            start : this.state.entryStartIndex,
+            limit : this.state.entryLimit
+        }).then((pagedData) => {
+            this.setState({
+                entries: pagedData.data,
+                entriesPagingHeader: {
+                    size: pagedData.size,
+                    limit: pagedData.limit,
+                    start: pagedData.startIndex
+                },
+                lastUpdated: new Date()
+            })
+        }).catch(console.log);
 
-        fetch(url)
-            .then(res => res.json())
-            .then((pagedData) => {
-                this.setState({
-                    entries: pagedData.data,
-                    entriesPagingHeader: {
-                        size: pagedData.size,
-                        limit: pagedData.limit,
-                        start: pagedData.startIndex
-                    },
-                    lastUpdated: new Date()
-                })
-            }).catch(console.log);
+        //fill buffer, TODO conditions to make sure it's filled or not filled when corect
+        // this.getEntries({
+        //     contains : this.state.containsFilter,
+        //     start : this.state.entryStartIndex + this.state.entryLimit,
+        //     limit : this.state.entryLimit
+        // }).then((pagedData) => {
+        //     this.setState({
+        //         nextEntries: pagedData.data
+        //     })
+        // }).catch(console.log);
 
         this.setState({
             activeFilter: this.state.containsFilter
@@ -103,7 +154,7 @@ class JournalEntries extends Component {
                                       key={this.entryCardKeyPrefix + index} />
                     ))}
 
-                    <div className="continue">
+                    <div className="continue" id="infiniteScroller">
                         { this.entriesRemaining() ? "..." : "."}
                     </div>
                 </div>
