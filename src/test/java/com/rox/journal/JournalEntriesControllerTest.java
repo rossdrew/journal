@@ -21,13 +21,13 @@ public class JournalEntriesControllerTest {
     public void listingIsEmpty() {
         final String url = "http://localhost:" + port + "/entries";
 
-        final ResponseEntity<JournalEntry[]> r =
+        final ResponseEntity<PageWrapper> r =
                 restTemplate.getForEntity(
                         url,
-                        JournalEntry[].class);
-        final JournalEntry[] entries = r.getBody();
+                        PageWrapper.class);
+        final PageWrapper entries = r.getBody();
 
-        assertEquals(0, entries.length);
+        assertEquals(0, entries.getData().size());
     }
 
     @Test
@@ -42,13 +42,13 @@ public class JournalEntriesControllerTest {
             restTemplate.postForObject(appendUrl, entry, String.class);
         }
 
-        final ResponseEntity<JournalEntry[]> a =
+        final ResponseEntity<PageWrapper> a =
                 restTemplate.getForEntity(
                         fetchUrl,
-                        JournalEntry[].class);
-        final JournalEntry[] entriesAfter = a.getBody();
+                        PageWrapper.class);
+        final PageWrapper entriesAfter = a.getBody();
 
-        assertEquals(createdEntryCount, entriesAfter.length);
+        assertEquals(entriesAfter.getData().size(), createdEntryCount);
     }
 
     //TODO filtering tests

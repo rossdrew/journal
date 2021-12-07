@@ -44,12 +44,12 @@ public class JournalEntriesController {
      * @return a {@link PageWrapper paged} list of entries with optional filtering
      */
     @GetMapping()
-    public PageWrapper<JournalEntry> fetchPagedEntries(
+    public PageWrapper<JournalEntry> fetchEntries(
             @RequestParam(value = "contains", required = false) Optional<String> containsString,
             @RequestParam(value = "start", required = false) Optional<Integer> start,
             @RequestParam(value = "limit", required = false) Optional<Integer> limit
     ){
-        return journalEntriesService.pagedList(
+        return journalEntriesService.list(
                 EntriesQuery.all()
                         .whereBodyContains(containsString)
                         .startingAtIndex(start)

@@ -20,8 +20,10 @@ public class InterfaceController {
     @GetMapping("/")
     public String greeting(Model model) {
         model.addAttribute("name", "Ross");
-        model.addAttribute("entries", journalEntriesService.list());
-        final Map<String, JournalEntry> entries = journalEntriesService.list(EntriesQuery.all()).stream().collect(Collectors.toMap(e -> formatter.format(e.getCreation()), e -> e));
+        final Map<String, JournalEntry> entries = journalEntriesService.list(EntriesQuery.all())
+                .getData()
+                .stream()
+                .collect(Collectors.toMap(e -> formatter.format(e.getCreation()), e -> e));
         model.addAllAttributes(entries);
         return "journal";
     }

@@ -17,23 +17,7 @@ public class JournalEntriesService {
         return testEntries.add(entry);
     }
 
-    public List<JournalEntry> list(final EntriesQuery query){
-        //TODO Paging information, PagedList<JournalEntry> perhaps
-        if (testEntries.size() <= query.getStart())
-            return Collections.emptyList();
-        int limit = query.getSize().orElse(testEntries.size() - query.getStart());
-        if (limit > testEntries.size())
-            limit = testEntries.size();
-
-        return testEntries.subList(
-                    query.getStart(),
-                    query.getStart() + limit
-                ).stream().filter(e -> {
-            return e.getBody().contains(query.getBodyContains());
-        }).collect(Collectors.toList());
-    }
-
-    public PageWrapper<JournalEntry> pagedList(final EntriesQuery query){
+    public PageWrapper<JournalEntry> list(final EntriesQuery query){
         if (testEntries.size() <= query.getStart())
             return PageWrapper.around(Collections.emptyList());
         int limit = query.getSize().orElse(testEntries.size() - query.getStart());
@@ -51,9 +35,5 @@ public class JournalEntriesService {
                           .startingAt(query.getStart())
                           .limitedTo(limit)
                           .fromPoolOf(testEntries.size());
-    }
-
-    public List<JournalEntry> list(){
-        return testEntries;
     }
 }
