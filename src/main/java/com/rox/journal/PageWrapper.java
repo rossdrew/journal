@@ -10,17 +10,17 @@ import java.util.Optional;
  * @param <DataType> the data type being wrapped
  */
 public class PageWrapper<DataType> {
-    private final Optional<Integer> size;
-    private final Optional<Integer> limit;
+    private final Optional<Integer> poolSize;
+    private final Optional<Integer> upperLimit;
     private final int startIndex;
     private final List<DataType> data;
 
-    private PageWrapper(final Optional<Integer> size,
-                        final Optional<Integer> limit,
+    private PageWrapper(final Optional<Integer> poolSize,
+                        final Optional<Integer> upperLimit,
                         final int startIndex,
                         final List<DataType> data) {
-        this.size = size;
-        this.limit = limit;
+        this.poolSize = poolSize;
+        this.upperLimit = upperLimit;
         this.startIndex = startIndex;
         this.data = data;
     }
@@ -49,6 +49,9 @@ public class PageWrapper<DataType> {
      * @return a new {@link PageWrapper} with the attributes of the source {@link PageWrapper} with limit set to given value
      */
     public <DataType> PageWrapper<DataType> limitedTo(final int count){
+        if (count > data.size())
+            throw new RuntimeException("Data is larger than the defined size limit we tried to set"); //XXX Custom exception required
+
         return new PageWrapper(Optional.empty(), Optional.of(Math.max(count, 0)), startIndex, data);
     }
 
@@ -58,15 +61,15 @@ public class PageWrapper<DataType> {
      * @return a new {@link PageWrapper} with the attributes of the source {@link PageWrapper} with count set to given value
      */
     public <DataType> PageWrapper<DataType> fromPoolOf(final int count){
-        return new PageWrapper(Optional.of(Math.max(count, 0)), limit, startIndex, data);
+        return new PageWrapper(Optional.of(Math.max(count, 0)), upperLimit, startIndex, data);
     }
 
-    public Optional<Integer> getSize() {
-        return size;
+    public Optional<Integer> getPoolSize() {
+        return poolSize;
     }
 
     public Optional<Integer> getLimit() {
-        return limit;
+        return upperLimit;
     }
 
     public int getStartIndex() {

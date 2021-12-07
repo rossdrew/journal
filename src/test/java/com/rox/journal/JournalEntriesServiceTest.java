@@ -5,8 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class JournalEntriesServiceTest {
     JournalEntriesService service = new JournalEntriesService();
@@ -32,15 +31,16 @@ public class JournalEntriesServiceTest {
     @Test
     void appendSimpleEntry() {
         final JournalEntry testEntry = new JournalEntry("This is my first test journal entry");
-        final int countBefore = service.list(EntriesQuery.all()).getData().size();
+        final PageWrapper<JournalEntry> resultBefore = service.list(EntriesQuery.all());
         service.append(testEntry);
-        final int countAfter = service.list(EntriesQuery.all()).getData().size();
-        final JournalEntry returnedEntry = service.list(EntriesQuery.all()).getData().get(0);
+        final PageWrapper<JournalEntry> resultAfter = service.list(EntriesQuery.all());
 
-        assertEquals(0, countBefore);
-        assertEquals(1, countAfter);
-        assertTrue(returnedEntry.equals(testEntry));
-        assertEquals(returnedEntry,testEntry);
+        assertEquals(0, resultBefore.getData().size());
+        assertFalse(resultBefore.getPoolSize().isPresent());
+        assertEquals(1, resultAfter.getData().size());
+        assertFalse(resultBefore.getPoolSize().isPresent());
+        assertTrue(resultAfter.getData().get(0).equals(testEntry));
+        assertEquals(resultAfter.getData().get(0),testEntry);
     }
 
     @Test
