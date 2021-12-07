@@ -9,16 +9,39 @@ A RESTful API for CRUD of Journal Entries in Java.
 `GET /entries?[contains="journal"][start=0][limit=10]`
 
 Get a list of journal entries. Optionally 
- - filtered by whether the `body` `contains` a given string.
- - only return `limit` entries
+ - filtered on entries in which their `body` `contains` a given string.
+ - only return `limit` number of entries
  - only return entries from `start` index
 
-Combining `start` and `limit` therefore gives us some paging functionality.
+Combining `start` and `limit` therefore gives us paging functionality.  As a result the data is returned in a paging header (`size`, `limit`, `startIndex`) with the data (entires) found under `data`:
 
 ```json
 {
- "body": "text body of journal entry",
- "creation": "date and time entry was created"
+  "size": 25,
+  "limit": 5,
+  "startIndex": 2,
+  "data": [
+    {
+      "body": "This is TEST journal entry No.2",
+      "creation": "2021-12-07T10:54:16.819+00:00"
+    },
+    {
+      "body": "This is TEST journal entry No.3",
+      "creation": "2021-12-07T10:54:16.830+00:00"
+    },
+    {
+      "body": "This is TEST journal entry No.4",
+      "creation": "2021-12-07T10:54:16.842+00:00"
+    },
+    {
+      "body": "This is TEST journal entry No.5",
+      "creation": "2021-12-07T10:54:16.853+00:00"
+    },
+    {
+      "body": "This is TEST journal entry No.6",
+      "creation": "2021-12-07T10:54:16.863+00:00"
+    }
+  ]
 }
 ```
 
