@@ -8,10 +8,10 @@ A RESTful API for CRUD of Journal Entries in Java.
 
 `GET /entries?[contains="journal"][start=0][limit=10]`
 
-Get a list of journal entries. Optionally 
+# Get a list of journal entries. Optionally 
  - filtered on entries in which their `body` `contains` a given string.
- - only return `limit` number of entries
- - only return entries from `start` index
+ - returning only `limit` number of entries
+ - returning only entries from `start` index
 
 Combining `start` and `limit` therefore gives us paging functionality.  As a result the data is returned in a paging header (`size`, `limit`, `startIndex`) with the data (entires) found under `data`:
 
@@ -45,7 +45,7 @@ Combining `start` and `limit` therefore gives us paging functionality.  As a res
 }
 ```
 
-`POST /entries/append`
+# `POST /entries/append`
 
 Append a new journal entry.  Creation field will be added automatically and any value provided for `created` will be ignored.
 
