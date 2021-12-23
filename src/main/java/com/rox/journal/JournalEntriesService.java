@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Repository
 public class JournalEntriesService {
@@ -24,7 +25,12 @@ public class JournalEntriesService {
         if (limit > testEntries.size())
             limit = testEntries.size();
 
-        final List<JournalEntry> results = testEntries.subList(
+        final ArrayList<JournalEntry> orderedTestEntries = IntStream.range(0, testEntries.size())
+                .map(i -> (testEntries.size() - 1 - i))
+                .mapToObj(testEntries::get)
+                .collect(Collectors.toCollection(ArrayList::new));
+
+        final List<JournalEntry> results = orderedTestEntries.subList(
                 query.getStart(),
                 query.getStart() + limit
         ).stream().filter(e -> {

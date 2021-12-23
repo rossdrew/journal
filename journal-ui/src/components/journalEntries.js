@@ -7,11 +7,6 @@ class JournalEntries extends Component {
     constructor() {
         super();
         this.state = {
-             entryBlockSize: null, //Size of entries blocks to request
-             entryBufferBlocks: 0, //Number of blocks each side of the displayed one to buffer
-             previousEntries: [],  //Buffer blocks backwards in time
-             nextEntries: [],      //Buffer blocks forwards in time
-
              entries: [],
              entriesPagingHeader: {
                  size: null,
@@ -52,7 +47,23 @@ class JournalEntries extends Component {
         if (this.isBottomOf(wrappedElement)) {
             console.log('Edge of loaded entries reached...');
             document.removeEventListener('scroll', this.trackScrolling);
+
             //TODO Load new entries
+            // let indexOfNewEntries = this.state.entryStartIndex + this.state.entryLimit
+            // let dynamicallyLoadedEntries = this.getEntries({
+            //     contains : this.state.containsFilter,
+            //     start : indexOfNewEntries,
+            //     limit : this.state.entryLimit
+            // });
+            //
+            // console.log("New entries: " + dynamicallyLoadedEntries.length + " From " + indexOfNewEntries + " to " + (indexOfNewEntries+this.state.entryLimit))
+            // let newEntries =  this.state.entries.concat(dynamicallyLoadedEntries)
+            // this.setState({
+            //     entries: newEntries
+            // })
+            // NOTE: This doesn't play well with markdown replacement and it's highlighted an ordering bug that I'm looking at
+            //------TODO--------------
+
             document.addEventListener('scroll', this.trackScrolling);
         }
     };
@@ -95,6 +106,7 @@ class JournalEntries extends Component {
             start : this.state.entryStartIndex,
             limit : this.state.entryLimit
         }).then((pagedData) => {
+            console.log("PagedData: " + pagedData.poolSize)
             this.setState({
                 entries: pagedData.data,
                 entriesPagingHeader: {
@@ -106,7 +118,7 @@ class JournalEntries extends Component {
             })
         }).catch(console.log);
 
-        //fill buffer, TODO conditions to make sure it's filled or not filled when corect
+        //fill buffer, TODO conditions to make sure it's filled or not filled when correct
         // this.getEntries({
         //     contains : this.state.containsFilter,
         //     start : this.state.entryStartIndex + this.state.entryLimit,
@@ -123,17 +135,13 @@ class JournalEntries extends Component {
     }
 
     entriesRemaining(){
-        if (this.state.entriesPagingHeader.size > (this.state.entriesPagingHeader.start + this.state.entriesPagingHeader.limit)){
-            return true
-        }else {
-            return false
-        }
+        console.log(this.state.entries.length + " entries of " + this.state.entriesPagingHeader.size + " available.")
+        return (this.state.entries.length < this.state.entriesPagingHeader.size)
+        // let latestLoadedEntries = (this.state.entriesPagingHeader.start + this.state.entriesPagingHeader.limit)
+        // return (this.state.entriesPagingHeader.size > latestLoadedEntries);
     }
 
     render() {
-        //Ordered by date, latest at top - why doesn't this work in the refresh method?
-        this.state.entries.sort((a, b) => b.creation - a.creation).reverse();
-
         return (
             <div className="w-100 d-flex justify-content-around">
                 <div className="w-50 entry-listing">
@@ -145,7 +153,7 @@ class JournalEntries extends Component {
                         Last Updated: {this.state.lastUpdated.toLocaleString()} {(this.state.activeFilter) ? ", Filtered by '" + this.state.activeFilter + "'" : ""}
                     </sup>
 
-                    {this.preview()}
+                    {/*{this.preview()}*/}
 
                     {this.state.entries.map((entry, index) => (
                         <JournalEntry entry={entry}
