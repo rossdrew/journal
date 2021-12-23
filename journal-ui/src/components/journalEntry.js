@@ -17,6 +17,8 @@ class JournalEntry extends Component {
      * @returns 'markdownText' with markdown links replaced with HTML
      */
     replaceLinks(markdownText){
+        if (!markdownText)
+            return ""
         //replace the linebreaks with <br>
         var parsedText = markdownText.replace(/(?:\r\n|\r|\n)/g, '<br>');
         //check for links of the form [text](url)
