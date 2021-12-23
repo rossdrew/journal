@@ -52,7 +52,7 @@ public class PageWrapper<DataType> {
         if (data.size() > count)
             throw new RuntimeException("Data is larger than the defined size limit we tried to set"); //XXX Custom exception required
 
-        return new PageWrapper(Optional.empty(), Optional.of(Math.max(count, 0)), startIndex, data);
+        return new PageWrapper(this.poolSize, Optional.of(Math.max(count, 0)), startIndex, data);
     }
 
     /**
@@ -64,7 +64,10 @@ public class PageWrapper<DataType> {
         return new PageWrapper(Optional.of(Math.max(count, 0)), upperLimit, startIndex, data);
     }
 
-    public Optional<Integer> getPoolSize() {
+    /**
+     * @return the pool size from which this data was drawn
+     */
+    public Optional<Integer> getSize() {
         return poolSize;
     }
 

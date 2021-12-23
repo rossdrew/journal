@@ -36,9 +36,9 @@ public class JournalEntriesServiceTest {
         final PageWrapper<JournalEntry> resultAfter = service.list(EntriesQuery.all());
 
         assertEquals(0, resultBefore.getData().size());
-        assertFalse(resultBefore.getPoolSize().isPresent());
+        assertFalse(resultBefore.getSize().isPresent());
         assertEquals(1, resultAfter.getData().size());
-        assertFalse(resultBefore.getPoolSize().isPresent());
+        assertFalse(resultBefore.getSize().isPresent());
         assertTrue(resultAfter.getData().get(0).equals(testEntry));
         assertEquals(resultAfter.getData().get(0),testEntry);
     }

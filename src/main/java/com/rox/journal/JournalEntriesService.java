@@ -31,13 +31,13 @@ public class JournalEntriesService {
             return e.getBody().contains(query.getBodyContains());
         }).collect(Collectors.toList());
 
-        PageWrapper<JournalEntry> page =
+        final PageWrapper<JournalEntry> page =
                 PageWrapper.around(results)
                           .startingAt(query.getStart())
                           .fromPoolOf(testEntries.size());
 
         if (query.getSize().isPresent()){
-            page = page.limitedTo(query.getSize().get());
+            return page.limitedTo(query.getSize().get());
         }
 
         return page;
