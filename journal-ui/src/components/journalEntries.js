@@ -52,34 +52,29 @@ class JournalEntries extends Component {
             return 0
     }
 
+    //XXX Could do with some cleanup
+    appendEntries() {
+        document.removeEventListener('scroll', this.trackScrolling);
+
+        let indexOfNewEntries = this.state.loadedEntries.start + this.elementCount()
+        this.getEntries({
+            contains : this.state.containsFilter,
+            start : indexOfNewEntries,
+            limit : this.state.entryLimit
+        }).then((pagedData) => {
+            this.setState({
+                entries: this.state.entries.concat(pagedData.data),
+            })
+        }).catch(console.log);
+
+        document.addEventListener('scroll', this.trackScrolling);
+    }
+
     trackScrolling = () => {
         const wrappedElement = document.getElementById('infiniteScroller');
+        //XXX Fetches and appends new antries
         if (this.isBottomOf(wrappedElement)) {
-            console.log('Edge of loaded entries reached...');
-            document.removeEventListener('scroll', this.trackScrolling);
-
-            //TODO Load new entries cleanup
-            let indexOfNewEntries = this.state.loadedEntries.start + this.elementCount()
-
-            console.log("Starting at " + this.state.loadedEntries.start + ", " + this.elementCount() + " elements stored.  Requesting another " + this.state.entriesPagingHeader.limit + ".  New elements starting from " + indexOfNewEntries)
-            console.log("Getting [" + indexOfNewEntries + ".." + (this.state.entryLimit+indexOfNewEntries) + "] (" + this.state.entryLimit +  " entries)")
-
-            this.getEntries({
-                contains : this.state.containsFilter,
-                start : indexOfNewEntries,
-                limit : this.state.entryLimit
-            }).then((pagedData) => {
-                console.log(pagedData)
-                console.log("...got " + pagedData.data.length + " new elements!")
-                this.setState({
-                    entries: this.state.entries.concat(pagedData.data),
-                })
-
-            }).catch(console.log);
-
-            //------TODO--------------
-
-            document.addEventListener('scroll', this.trackScrolling);
+            this.appendEntries()
         }
     };
 
@@ -106,8 +101,6 @@ class JournalEntries extends Component {
         if (start) url = url.concat("start=" + start + "&");
         if (limit) url = url.concat("limit=" + limit + "&");
 
-        console.log("Making request '" + url + "'")
-
         return fetch(url)
             .then(res => res.json())
             .catch(console.log);
@@ -133,20 +126,9 @@ class JournalEntries extends Component {
                     limit: pagedData.limit,
                     start: pagedData.startIndex
                 },
-                lastUpdated: new Date()
+                lastUpdated: new Date(),
             })
         }).catch(console.log);
-
-        //fill buffer, TODO conditions to make sure it's filled or not filled when correct
-        // this.getEntries({
-        //     contains : this.state.containsFilter,
-        //     start : this.state.entryStartIndex + this.state.entryLimit,
-        //     limit : this.state.entryLimit
-        // }).then((pagedData) => {
-        //     this.setState({
-        //         nextEntries: pagedData.data
-        //     })
-        // }).catch(console.log);
 
         this.setState({
             activeFilter: this.state.containsFilter
@@ -154,10 +136,7 @@ class JournalEntries extends Component {
     }
 
     entriesRemaining(){
-        console.log(this.state.entries.length + " entries of " + this.state.entriesPagingHeader.size + " available.")
         return (this.state.entries.length < this.state.entriesPagingHeader.size)
-        // let latestLoadedEntries = (this.state.entriesPagingHeader.start + this.state.entriesPagingHeader.limit)
-        // return (this.state.entriesPagingHeader.size > latestLoadedEntries);
     }
 
     render() {
