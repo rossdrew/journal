@@ -8,6 +8,9 @@ class JournalEntries extends Component {
         super();
         this.state = {
              entries: [],
+             loadedEntries: {
+                 start: 0
+             },
              entriesPagingHeader: {
                  size: null,
                  limit: null,
@@ -16,7 +19,7 @@ class JournalEntries extends Component {
 
              containsFilter: "",
              entryStartIndex: null,
-             entryLimit: null,
+             entryLimit: 5,
 
              activeFilter: "",
              lastUpdated: "unknown",
@@ -42,26 +45,38 @@ class JournalEntries extends Component {
         document.removeEventListener('scroll', this.trackScrolling);
     }
 
+    elementCount() {
+        if (typeof this.state.entries !== 'undefined')
+            return this.state.entries.length
+        else
+            return 0
+    }
+
     trackScrolling = () => {
         const wrappedElement = document.getElementById('infiniteScroller');
         if (this.isBottomOf(wrappedElement)) {
             console.log('Edge of loaded entries reached...');
             document.removeEventListener('scroll', this.trackScrolling);
 
-            //TODO Load new entries
-            // let indexOfNewEntries = this.state.entryStartIndex + this.state.entryLimit
-            // let dynamicallyLoadedEntries = this.getEntries({
-            //     contains : this.state.containsFilter,
-            //     start : indexOfNewEntries,
-            //     limit : this.state.entryLimit
-            // });
-            //
-            // console.log("New entries: " + dynamicallyLoadedEntries.length + " From " + indexOfNewEntries + " to " + (indexOfNewEntries+this.state.entryLimit))
-            // let newEntries =  this.state.entries.concat(dynamicallyLoadedEntries)
-            // this.setState({
-            //     entries: newEntries
-            // })
-            // NOTE: This doesn't play well with markdown replacement and it's highlighted an ordering bug that I'm looking at
+            //TODO Load new entries cleanup
+            let indexOfNewEntries = this.state.loadedEntries.start + this.elementCount()
+
+            console.log("Starting at " + this.state.loadedEntries.start + ", " + this.elementCount() + " elements stored.  Requesting another " + this.state.entriesPagingHeader.limit + ".  New elements starting from " + indexOfNewEntries)
+            console.log("Getting [" + indexOfNewEntries + ".." + (this.state.entryLimit+indexOfNewEntries) + "] (" + this.state.entryLimit +  " entries)")
+
+            this.getEntries({
+                contains : this.state.containsFilter,
+                start : indexOfNewEntries,
+                limit : this.state.entryLimit
+            }).then((pagedData) => {
+                console.log(pagedData)
+                console.log("...got " + pagedData.data.length + " new elements!")
+                this.setState({
+                    entries: this.state.entries.concat(pagedData.data),
+                })
+
+            }).catch(console.log);
+
             //------TODO--------------
 
             document.addEventListener('scroll', this.trackScrolling);
@@ -91,6 +106,8 @@ class JournalEntries extends Component {
         if (start) url = url.concat("start=" + start + "&");
         if (limit) url = url.concat("limit=" + limit + "&");
 
+        console.log("Making request '" + url + "'")
+
         return fetch(url)
             .then(res => res.json())
             .catch(console.log);
@@ -106,9 +123,11 @@ class JournalEntries extends Component {
             start : this.state.entryStartIndex,
             limit : this.state.entryLimit
         }).then((pagedData) => {
-            console.log("PagedData: " + pagedData.poolSize)
             this.setState({
                 entries: pagedData.data,
+                loadedEntries: {
+                    start: pagedData.startIndex
+                },
                 entriesPagingHeader: {
                     size: pagedData.size,
                     limit: pagedData.limit,
