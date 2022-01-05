@@ -1,12 +1,33 @@
 ## Journal
 
-An app to track your day.
+A utility to log journal entries that represent actions and thoughts then identify and manage your open tasks.
+
+The intent is for this to function a little like Twitter with some workflow management thrown in.  You log actions and useful information, you can reference it and it will keep track of tasks you have open.
+
+
+### Use cases 
+
+Use case 1: A colleague asks you about work item X, you draw a blank. You can't remember every little thing you've done.
+Solution: Search for entries containing "_work item X_" or "_X_".  I've worked on it before and here and the links to get me back up to speed
+
+Use case 2 (In Progress): What are my outstanding tasks?
+Solution: Look at open task list
+
+#### Plans
+
+- Multi user support
+  - Privacy settings to allow sharing of entries
+- Annotate past entries
+- Search by date
+- Preview formatted entry card
+
 
 ## Journal Server
 
 A RESTful API for CRUD of Journal Entries in Java.
 
 # `GET /entries?[contains="journal"][start=0][limit=10]`
+
 
 Get a list of journal entries. Optionally 
  - filtered on entries in which their `body` `contains` a given string.

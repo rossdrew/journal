@@ -1,0 +1,73 @@
+openapi: 3.0.0
+info:
+  title: Journal API
+  description: API to log and search simple markdown journal entries
+  version: 0.0.1-SNAPSHOT
+
+paths:
+  /entries:
+    post:
+      summary: Create a journal entry
+      description: Add a journal entry to the journal at the current time
+      responses:
+        '200':
+          description: Journal entry was created successfully
+    get:
+      summary: Returns a list of entries
+      description: Returns a list of journal entries
+      parameters:
+        - name: contains
+          in: path
+          required: false
+          description: Filter to only include entries which have this value in their body
+          schema:
+            type: string
+        - name: start
+          in: path
+          required: false
+          description: Return only entries from this index onwards in the pool
+          schema:
+            type: integer
+        - name: limit
+          in: path
+          required: false
+          description: Return this number of entries at most.  There can be less than this in the pool
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: A JSON object containing a paging header and journal entry data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EntryListing'
+
+# Descriptions of common components
+components:
+  schemas:
+    # Schema for journal entry list
+    Entry:
+      type: object
+      properties:
+        body:
+          type: string
+          description: The markdown content of the journal entry
+        creation:
+          type: string
+          format: date-time
+          description: The date the API recorded this entry
+
+    EntryListing:
+      type: object
+      properties:
+        size:
+          type: integer
+          description: The size of the pool from which this data was sourced
+        limit:
+          type: integer
+          description: The maximum number of elements returned
+        startIndex:
+          type: integer
+          description: The starting index in the pool from which this data was sourced
+        data:
+          $ref: '#components/schemas/Entry'
