@@ -73,4 +73,6 @@ components:
           type: integer
           description: The starting index in the pool from which this data was sourced
         data:
-          $ref: '#components/schemas/Entry'
+          type: array
+          items:
+            $ref: '#components/schemas/Entry'
