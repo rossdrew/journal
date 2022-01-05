@@ -24,7 +24,7 @@ Solution: Look at open task list
 
 ## Journal Server
 
-A RESTful API for CRUD of Journal Entries in Java.
+A RESTful API for CRUD of Journal Entries in Java.  Also working on an [Open API Spec](https://github.com/rossdrew/journal/blob/main/openapi.yaml)
 
 # `GET /entries?[contains="journal"][start=0][limit=10]`
 
