@@ -9,6 +9,12 @@ paths:
     post:
       summary: Create a journal entry
       description: Add a journal entry to the journal at the current time
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DraftEntry'
       responses:
         '200':
           description: Journal entry was created successfully
@@ -47,6 +53,14 @@ paths:
 # Descriptions of common components
 components:
   schemas:
+    # Schema for a single journal entry not yet assigned a date
+    DraftEntry:
+      type: object
+      properties:
+        body:
+          type: string
+          description: The markdown content of the journal entry
+
     # Schema for a single journal entry
     Entry:
       type: object
