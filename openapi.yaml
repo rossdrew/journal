@@ -15,8 +15,8 @@ paths:
 
   /entries:
     get:
-      summary: Returns a list of entries
-      description: Returns a list of journal entries
+      summary: Returns an ordered collection of journal entries
+      description: Fetch journal entries in reverse date order (most recent first) within defined parameters
       parameters:
         - name: contains
           in: path
