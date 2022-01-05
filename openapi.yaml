@@ -47,7 +47,7 @@ paths:
 # Descriptions of common components
 components:
   schemas:
-    # Schema for journal entry list
+    # Schema for a single journal entry
     Entry:
       type: object
       properties:
@@ -59,6 +59,7 @@ components:
           format: date-time
           description: The date the API recorded this entry
 
+    # Schema for a list of paged journal entries
     EntryListing:
       type: object
       properties:
