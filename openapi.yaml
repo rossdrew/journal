@@ -5,13 +5,15 @@ info:
   version: 0.0.1-SNAPSHOT
 
 paths:
-  /entries:
+  /entries/append:
     post:
       summary: Create a journal entry
       description: Add a journal entry to the journal at the current time
       responses:
         '200':
           description: Journal entry was created successfully
+
+  /entries:
     get:
       summary: Returns a list of entries
       description: Returns a list of journal entries
