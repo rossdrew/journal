@@ -2,6 +2,7 @@ package com.rox.journal;
 
 import org.junit.jupiter.api.Test;
 
+import javax.swing.text.html.Option;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -47,7 +48,7 @@ public class EntriesQueryTest {
 
         assertEquals("", defaultQuery.getBodyContains());
         assertEquals(0, defaultQuery.getStart());
-        assertEquals(101, defaultQuery.getSize());
+        assertEquals(Optional.of(101), defaultQuery.getSize());
     }
 
     @Test
@@ -59,7 +60,7 @@ public class EntriesQueryTest {
 
         assertEquals("", defaultQuery.getBodyContains());
         assertEquals(10, defaultQuery.getStart());
-        assertEquals(101, defaultQuery.getSize());
+        assertEquals(Optional.of(101), defaultQuery.getSize());
     }
 
     @Test
@@ -72,7 +73,7 @@ public class EntriesQueryTest {
 
         assertEquals("Locke Lamora", defaultQuery.getBodyContains());
         assertEquals(10, defaultQuery.getStart());
-        assertEquals(101, defaultQuery.getSize());
+        assertEquals(Optional.of(101), defaultQuery.getSize());
     }
 
 }
