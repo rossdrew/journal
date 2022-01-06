@@ -18,7 +18,7 @@ public class JournalEntriesServiceTest {
     }
 
     void createTestEntries(){
-        for (int entryIndex = 0; entryIndex< 10; entryIndex++){
+        for (int entryIndex = 9; entryIndex >= 0; entryIndex--){
             service.append(new JournalEntry(TEST_ENTRY_PREFIX + entryIndex));
             try {
                 Thread.sleep(100);
@@ -207,7 +207,7 @@ public class JournalEntriesServiceTest {
                         .startingAtIndex(Optional.of(startIndex))
                         .limitedTo(Optional.of(size)));
         assertEquals(size, range.getData().size(), "Range of " + size + " should return " + size + " item at the correct index (" + startIndex + ")");
-        assertEquals(TEST_ENTRY_PREFIX+startIndex, range.getData().get(0).getBody());
+        assertEquals(TEST_ENTRY_PREFIX + startIndex, range.getData().get(0).getBody());
     }
 
     @Test
