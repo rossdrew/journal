@@ -1,4 +1,6 @@
-package com.rox.journal.entry;
+package com.rox.journal;
+
+import com.rox.journal.entry.JournalEntry;
 
 import java.util.Collections;
 import java.util.HashMap;
