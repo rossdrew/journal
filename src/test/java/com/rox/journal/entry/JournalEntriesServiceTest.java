@@ -1,9 +1,6 @@
 package com.rox.journal.entry;
 
 import com.rox.journal.PageWrapper;
-import com.rox.journal.entry.EntriesQuery;
-import com.rox.journal.entry.JournalEntriesService;
-import com.rox.journal.entry.JournalEntry;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
