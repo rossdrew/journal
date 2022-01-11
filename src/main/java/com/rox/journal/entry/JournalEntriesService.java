@@ -1,6 +1,7 @@
 package com.rox.journal.entry;
 
 import com.rox.journal.PageWrapper;
+import com.rox.journal.Task;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
