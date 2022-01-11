@@ -1,8 +1,8 @@
 :root {
   --base-color: #323232;
   --plate-background-color: #393b3e;
-  --plate-foreground-color: #b3b3b3;
   --plate-highlight-color: #696969;
+  --plate-foreground-color: #b3b3b3;
   --global-highlight-color-1: #8da485;
   --global-highlight-color-2: #dfffaa;
 }
@@ -49,6 +49,7 @@ a:hover {
 
 .continue {
   text-align: center;
+  color: var(--global-highlight-color-2);
   font-size: xxx-large;
 }
 

@@ -1,4 +1,4 @@
-package com.rox.journal;
+package com.rox.journal.entry;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;

@@ -1,8 +1,7 @@
-package com.rox.journal;
+package com.rox.journal.entry;
 
 import org.junit.jupiter.api.Test;
 
-import javax.swing.text.html.Option;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

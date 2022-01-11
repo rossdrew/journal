@@ -1,5 +1,8 @@
 package com.rox.journal;
 
+import com.rox.journal.entry.EntriesQuery;
+import com.rox.journal.entry.JournalEntriesService;
+import com.rox.journal.entry.JournalEntry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

@@ -1,5 +1,6 @@
-package com.rox.journal;
+package com.rox.journal.entry;
 
+import com.rox.journal.PageWrapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

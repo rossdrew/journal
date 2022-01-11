@@ -1,10 +1,13 @@
-package com.rox.journal;
+package com.rox.journal.entry;
 
+import com.rox.journal.PageWrapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -13,8 +16,23 @@ public class JournalEntriesService {
     //TODO This becomes a database at some point
     private List<JournalEntry> testEntries = new ArrayList<>();
 
+    private static final Pattern starting = Pattern.compile("_([^_]*)_");
+    private static final Pattern completing = Pattern.compile("--([^--]*)--");
+
     public boolean append(JournalEntry entry){
         entry.setCreation(new java.util.Date());
+
+        final Matcher workStarting = starting.matcher(entry.getBody());
+        while (workStarting.find()){
+            final Task startedTask = new Task(workStarting.group(1)).startedAt(entry);
+            System.out.println("Task '" + workStarting.group(1) + "' started at '" + entry.getCreation() + "' as " + startedTask);
+        }
+
+        final Matcher workCompleting = completing.matcher(entry.getBody());
+        while (workCompleting.find()){
+            final Task completedTask = new Task(workCompleting.group(1)).completeAsOf(entry);
+            System.out.println("Task '" + workCompleting.group(1) + "' completed at '" + entry.getCreation() + "' as " + completedTask);
+        }
         return testEntries.add(entry);
     }
 
