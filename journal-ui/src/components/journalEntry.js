@@ -43,7 +43,6 @@ class JournalEntry extends Component {
         if(elements != null && elements.length > 0){
             for(const el of elements){
                 let linkText = el.match(/_([^_]*)_/)[1];
-                let url = el.match(/_([^_]*)_/)[1];
                 parsedText = parsedText.replace(el,'<i>'+linkText+'</i>');
             }
         };
@@ -60,7 +59,6 @@ class JournalEntry extends Component {
         if(elements != null && elements.length > 0){
             for(const el of elements){
                 let linkText = el.match(/--([^--]*)--/)[1];
-                let url = el.match(/--([^--]*)--/)[1];
                 parsedText = parsedText.replace(el,'<strike>'+linkText+'</strike>');
             }
         };
