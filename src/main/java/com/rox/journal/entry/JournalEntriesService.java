@@ -21,7 +21,7 @@ public class JournalEntriesService {
     private static final Pattern completing = Pattern.compile("--([^--]*)--");
 
     public boolean append(JournalEntry entry){
-        entry.setCreation(new java.util.Date());
+        entry = entry.at(new java.util.Date());
 
         final Matcher workStarting = starting.matcher(entry.getBody());
         while (workStarting.find()){

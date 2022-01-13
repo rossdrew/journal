@@ -24,17 +24,17 @@ public class JournalEntryTest {
     @Test
     public void testMinimalCreation(){
         final String testContent = "This is a test";
-        final JournalEntry entry = new JournalEntry(testContent);
+        final JournalEntry entry = JournalEntry.create(testContent);
 
         assertEquals(testContent, entry.getBody());
-        assertNull(entry.getCreation());
+        assertNotNull(entry.getCreation());
     }
 
     @Test
     public void testFullCreation(){
         final String testContent = "This is a test";
         final Date testDate = new Date();
-        final JournalEntry entry = new JournalEntry(testContent, testDate);
+        final JournalEntry entry = JournalEntry.create(testContent).at(testDate);
 
         assertEquals(testContent, entry.getBody());
         assertEquals(testDate, entry.getCreation());
@@ -44,8 +44,8 @@ public class JournalEntryTest {
     public void testEquality(){
         final String testContent = "This is a test";
         final Date testDate = new Date();
-        final JournalEntry entryA = new JournalEntry(testContent, testDate);
-        final JournalEntry entryB = new JournalEntry(testContent, testDate);
+        final JournalEntry entryA = JournalEntry.create(testContent).at(testDate);
+        final JournalEntry entryB = JournalEntry.create(testContent).at(testDate);
 
         assertEquals(entryA, entryB);
         assertEquals(entryB, entryA);
@@ -55,10 +55,10 @@ public class JournalEntryTest {
 
     @Test
     public void testInequality(){
-        final JournalEntry entryA = new JournalEntry("This is a test", testDate);
-        final JournalEntry differentContentEntry = new JournalEntry("This is not the same", testDate);
-        final JournalEntry differentDateEntry = new JournalEntry("This is a test", new Date());
-        final JournalEntry differentContentAndDateEntry = new JournalEntry("This is not the same", new Date());
+        final JournalEntry entryA = JournalEntry.create("This is a test").at(testDate);
+        final JournalEntry differentContentEntry = JournalEntry.create("This is not the same").at(testDate);
+        final JournalEntry differentDateEntry = JournalEntry.create("This is a test").at(new Date());
+        final JournalEntry differentContentAndDateEntry = JournalEntry.create("This is not the same").at(new Date());
 
         assertNotEquals(entryA, differentContentEntry);
         assertNotEquals(differentContentEntry, entryA);

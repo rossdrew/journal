@@ -22,7 +22,6 @@ public class InterfaceController {
 
     @GetMapping("/")
     public String greeting(Model model) {
-        model.addAttribute("name", "Ross");
         final Map<String, JournalEntry> entries = journalEntriesService.list(EntriesQuery.all())
                 .getData()
                 .stream()

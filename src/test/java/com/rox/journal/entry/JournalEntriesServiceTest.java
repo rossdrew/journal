@@ -20,7 +20,7 @@ public class JournalEntriesServiceTest {
 
     void createTestEntries(){
         for (int entryIndex = 9; entryIndex >= 0; entryIndex--){
-            service.append(new JournalEntry(TEST_ENTRY_PREFIX + entryIndex));
+            service.append(JournalEntry.create(TEST_ENTRY_PREFIX + entryIndex));
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
@@ -31,7 +31,7 @@ public class JournalEntriesServiceTest {
 
     @Test
     void appendSimpleEntry() {
-        final JournalEntry testEntry = new JournalEntry("This is my first test journal entry");
+        final JournalEntry testEntry = JournalEntry.create("This is my first test journal entry");
         final PageWrapper<JournalEntry> resultBefore = service.list(EntriesQuery.all());
         service.append(testEntry);
         final PageWrapper<JournalEntry> resultAfter = service.list(EntriesQuery.all());
