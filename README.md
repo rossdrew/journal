@@ -44,25 +44,43 @@ Combining `start` and `limit` therefore gives us paging functionality.  As a res
   "data": [
     {
       "body": "This is TEST journal entry No.2",
-      "creation": "2021-12-07T10:54:16.819+00:00"
+      "creation": "2021-12-07T10:54:16.819+00:00",
+      "id": "1642519938861"
+      
     },
     {
       "body": "This is TEST journal entry No.3",
-      "creation": "2021-12-07T10:54:16.830+00:00"
+      "creation": "2021-12-07T10:54:16.830+00:00",
+      "id": "1642519938862"
     },
     {
       "body": "This is TEST journal entry No.4",
-      "creation": "2021-12-07T10:54:16.842+00:00"
+      "creation": "2021-12-07T10:54:16.842+00:00",
+      "id": "1642519938863"
     },
     {
       "body": "This is TEST journal entry No.5",
-      "creation": "2021-12-07T10:54:16.853+00:00"
+      "creation": "2021-12-07T10:54:16.853+00:00",
+      "id": "1642519938864"
     },
     {
       "body": "This is TEST journal entry No.6",
-      "creation": "2021-12-07T10:54:16.863+00:00"
+      "creation": "2021-12-07T10:54:16.863+00:00",
+      "id": "1642519938865"
     }
   ]
+}
+```
+
+# `GET /entries/{entry_id}`
+
+Get a specific entry:
+
+```json
+{
+  "body": "This is TEST journal entry No.2",
+  "creation": "2021-12-07T10:54:16.819+00:00",
+  "id": "1642519938884"
 }
 ```
 
