@@ -56,9 +56,14 @@ public class JournalEntriesController {
                         .limitedTo(limit));
     }
 
+    @GetMapping("/{id}")
+    public JournalEntry fetchEntry(@PathVariable String id){
+        return journalEntriesService.get(id);
+    }
+
     @PostMapping("/append")
-    public String createEntry(@RequestBody JournalEntry entry){
+    public JournalEntry createEntry(@RequestBody JournalEntry entry){
         journalEntriesService.append(entry);
-        return entry.getBody();
+        return entry;
     }
 }

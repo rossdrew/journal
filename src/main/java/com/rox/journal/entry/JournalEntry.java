@@ -1,6 +1,5 @@
 package com.rox.journal.entry;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
 
@@ -9,15 +8,14 @@ public class JournalEntry {
     private Date creation;
     private String id;
 
-    private final SimpleDateFormat formatter = new SimpleDateFormat("SSS");
-
     private JournalEntry(final String body, final Date creationTime){
         this.body = body;
         this.creation = creationTime;
         if (creationTime==null) {
             id = "UNKNOWN";
         }else {
-            id = String.valueOf((creationTime.getTime() / 1000L)) + "_" + formatter.format(creationTime);
+            //XXX This "id" method could cause clashes
+            id = String.valueOf(creationTime.getTime());
         }
     }
 

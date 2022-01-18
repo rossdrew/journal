@@ -4,6 +4,7 @@ import com.rox.journal.PageWrapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -42,6 +43,15 @@ public class JournalEntriesServiceTest {
         assertFalse(resultBefore.getSize().isPresent());
         assertTrue(resultAfter.getData().get(0).equals(testEntry));
         assertEquals(resultAfter.getData().get(0),testEntry);
+    }
+
+    @Test
+    void retrieveEntry() {
+        createTestEntries();
+
+        final List<JournalEntry> entries = service.list(EntriesQuery.all()).getData();
+
+        assertEquals(entries.get(0), service.get(entries.get(0).getId()));
     }
 
     @Test
