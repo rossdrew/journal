@@ -1,12 +1,15 @@
 package com.rox.journal.entry;
 
 import com.rox.journal.PageWrapper;
-import com.rox.journal.Task;
+import com.rox.journal.task.Task;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -66,5 +69,16 @@ public class JournalEntriesService {
         }
 
         return page;
+    }
+
+    /**
+     * @param entryId id of the {@link JournalEntry} to return
+     * @return {@link JournalEntry} or throw a {@link ResponseStatusException}/{@link HttpStatus} 404
+     */
+    public JournalEntry get(final String entryId) {
+        final Optional<JournalEntry> first = testEntries.stream().filter(entry -> entry.getId() == entryId).findFirst();
+        return first.orElseThrow(() -> new ResponseStatusException(
+                HttpStatus.NOT_FOUND, "Entry not found"
+        ));
     }
 }
