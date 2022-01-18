@@ -90,7 +90,9 @@ Append a new journal entry.  Creation field will be added automatically and any 
 
 ```json
 {
- "body": "text body of journal entry",
+  "body": "text body of journal entry",
+  "creation": "2022-01-18T16:23:31.146+00:00",
+  "id": "1642523011146"
 }
 ```
 
