@@ -63,7 +63,6 @@ public class JournalEntriesController {
 
     @PostMapping("/append")
     public JournalEntry createEntry(@RequestBody JournalEntry entry){
-        journalEntriesService.append(entry);
-        return entry;
+        return journalEntriesService.append(entry);
     }
 }

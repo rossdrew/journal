@@ -23,7 +23,7 @@ public class JournalEntriesService {
     private static final Pattern starting = Pattern.compile("_([^_]*)_");
     private static final Pattern completing = Pattern.compile("--([^--]*)--");
 
-    public boolean append(JournalEntry entry){
+    public JournalEntry append(JournalEntry entry){
         entry = entry.at(new java.util.Date());
 
         final Matcher workStarting = starting.matcher(entry.getBody());
@@ -37,7 +37,8 @@ public class JournalEntriesService {
             final Task completedTask = new Task(workCompleting.group(1)).completeAsOf(entry);
             System.out.println("Task '" + workCompleting.group(1) + "' completed at '" + entry.getCreation() + "' as " + completedTask);
         }
-        return testEntries.add(entry);
+        testEntries.add(entry);
+        return entry;
     }
 
     public PageWrapper<JournalEntry> list(final EntriesQuery query){
@@ -76,7 +77,8 @@ public class JournalEntriesService {
      * @return {@link JournalEntry} or throw a {@link ResponseStatusException}/{@link HttpStatus} 404
      */
     public JournalEntry get(final String entryId) {
-        final Optional<JournalEntry> first = testEntries.stream().filter(entry -> entry.getId() == entryId).findFirst();
+        final Optional<JournalEntry> first = testEntries.stream().filter(entry -> entry.getId().equals(entryId)).findFirst();
+
         return first.orElseThrow(() -> new ResponseStatusException(
                 HttpStatus.NOT_FOUND, "Entry not found"
         ));
