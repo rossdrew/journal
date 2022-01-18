@@ -43,8 +43,8 @@ public class JournalEntriesControllerTest {
 
         for (int entryIndex=0; entryIndex<createdEntryCount; entryIndex++){
             final JournalEntry entry = JournalEntry.create("Entry No." + entryIndex).at(new java.util.Date());
-            String s = restTemplate.postForObject(appendUrl, entry, String.class);
-            System.out.println(s);
+            final JournalEntry newEntry = restTemplate.postForObject(appendUrl, entry, JournalEntry.class);
+            System.out.println(newEntry.toString());
         }
 
         final ResponseEntity<PageWrapper> a =
