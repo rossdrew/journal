@@ -1,4 +1,4 @@
-package com.rox.journal;
+package com.rox.journal.task;
 
 import com.rox.journal.entry.JournalEntry;
 
@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Task {
-    /** The relationship of a given {@link Task} to the entity holding it */
+    /** The relationship of a given {@link Task} to the linked entity ({@link JournalEntry}) */
     public enum TaskRelationship {
         START,
         COMPLETE,
@@ -16,7 +16,6 @@ public class Task {
 
     private String id;
     private Map<JournalEntry, TaskRelationship> relationships = Collections.emptyMap();
-    private JournalEntry linkedEntries;
 
     public Task(final String id){
         this.id = id;
@@ -39,8 +38,9 @@ public class Task {
         return new Task(id, mapWrap(linkedEntry, TaskRelationship.LINK));
     }
 
-    private Map<JournalEntry, TaskRelationship> mapWrap(final JournalEntry entry, final TaskRelationship relationship){
-        final Map<JournalEntry, TaskRelationship> relationships = new HashMap<>();
+    private Map<JournalEntry, TaskRelationship> mapWrap(final JournalEntry entry,
+                                                        final TaskRelationship relationship){
+        final Map<JournalEntry, TaskRelationship> relationships = new HashMap<>(this.relationships);
         relationships.put(entry, relationship);
         return relationships;
     }
