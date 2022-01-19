@@ -5,15 +5,15 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Pattern;
 
 @Repository
 public class TaskService {
     //TODO This becomes a database at some point
     private List<Task> tasks = new ArrayList<>();
 
-    private static final Pattern starting = Pattern.compile("_([^_]*)_");
-    private static final Pattern completing = Pattern.compile("--([^--]*)--");
+    public TaskService(){
+        tasks.add(new Task("PAZ-1")); //DEBUG
+    }
 
     public boolean append(Task entry){
         return tasks.add(entry);

@@ -1,5 +1,6 @@
 package com.rox.journal.task;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.rox.journal.entry.JournalEntry;
 
 import java.util.Collections;
@@ -15,7 +16,16 @@ public class Task {
     }
 
     private String id;
+    @JsonDeserialize(keyUsing = TaskToEntryMapSerializer.class)
     private Map<JournalEntry, TaskRelationship> relationships = Collections.emptyMap();
+
+    public String getId() {
+        return id;
+    }
+
+    public Map<JournalEntry, TaskRelationship> getRelationships() {
+        return relationships;
+    }
 
     public Task(final String id){
         this.id = id;

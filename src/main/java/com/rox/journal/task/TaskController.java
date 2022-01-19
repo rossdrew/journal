@@ -12,6 +12,7 @@ public class TaskController {
 
     public TaskController(TaskService taskService) {
         this.taskService = taskService;
+
     }
 
     @GetMapping()
@@ -20,8 +21,8 @@ public class TaskController {
     }
 
     @PostMapping("/create")
-    public String createEntry(@RequestBody Task task){
+    public Task createEntry(@RequestBody Task task){
         taskService.append(task);
-        return task.toString(); //TODO: What do we return here?
+        return task;
     }
 }
