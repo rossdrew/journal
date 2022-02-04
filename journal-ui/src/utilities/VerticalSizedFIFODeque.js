@@ -23,6 +23,7 @@ class VerticalSizedFIFODeque {
         if (this.first == null){
             this.first = newElement;
             this.last = newElement;
+            this.size = 1;
             return;
         }
 
@@ -30,6 +31,7 @@ class VerticalSizedFIFODeque {
         newElement.next = this.last
         this.last.next = newElement;
         this.last = newElement;
+        this.size++;
 
         //Burn element at the top
         if (this.size > this.maxSize){
@@ -37,6 +39,7 @@ class VerticalSizedFIFODeque {
             this.first.next = null;
             newFirst.previous = null;
             this.first = newFirst;
+            this.size--;
         }
     }
 
@@ -45,6 +48,7 @@ class VerticalSizedFIFODeque {
         if (this.first == null){
             this.first = newElement;
             this.last = newElement;
+            this.size = 1;
             return;
         }
 
@@ -52,6 +56,7 @@ class VerticalSizedFIFODeque {
         newElement.next = this.first
         this.first.previous = newElement
         this.first = newElement
+        this.size++;
 
         //Burn element at the bottom
         if (this.size > this.maxSize){
@@ -59,7 +64,12 @@ class VerticalSizedFIFODeque {
             this.last.previous = null;
             newLast.next = null;
             this.last = newLast;
+            this.size--;
         }
+    }
+
+    return(){
+        //TODO return an array of all elements
     }
 }
 
