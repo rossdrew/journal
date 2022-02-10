@@ -1,3 +1,5 @@
+import JournalEntries from "../components/journalEntries";
+
 class VerticalSizedFIFODeque {
     constructor(size) {
         this.first = null;
@@ -19,21 +21,27 @@ class VerticalSizedFIFODeque {
     }
 
     append(element){
-        let newElement = ElementNode(element)
+        let newElement = new ElementNode(element)
         if (this.first == null){
+            console.log("No first entry")
             this.first = newElement;
             this.last = newElement;
             this.size = 1;
             return;
+        }else{
+            console.log(">>>" + this.first.getElement())
+            // console.log(this.last.getElement() + "<<<")
         }
 
-        // (..,l) -> (..,l,n)
-        newElement.next = this.last
-        this.last.next = newElement;
+        console.log("Adding '" + element);
+        // (f,..,l) -> (f,..,l,n)
+        newElement.setPrevious(this.last)
+        this.last.setNext(newElement);
         this.last = newElement;
         this.size++;
+        console.log("...wrapped as '" + newElement.getPrevious().getElement() + "-" + newElement.element + "-" + newElement.getNext() + "'");
 
-        //Burn element at the top
+        //Burn top element
         if (this.size > this.maxSize){
             let newFirst = this.first.next;
             this.first.next = null;
@@ -41,10 +49,11 @@ class VerticalSizedFIFODeque {
             this.first = newFirst;
             this.size--;
         }
+        console.log("...COMPLETE")
     }
 
     prepend(element){
-        let newElement = ElementNode(element)
+        let newElement = new ElementNode(element)
         if (this.first == null){
             this.first = newElement;
             this.last = newElement;
@@ -52,16 +61,16 @@ class VerticalSizedFIFODeque {
             return;
         }
 
-        // (f,..) -> (n,f,..)
-        newElement.next = this.first
-        this.first.previous = newElement
-        this.first = newElement
+        // (f,..,l) -> (n,f,..,l)
+        newElement.setNext(this.first);
+        this.first.setPrevious(newElement);
+        this.first = newElement;
         this.size++;
 
-        //Burn element at the bottom
+        //Burn bottom element
         if (this.size > this.maxSize){
-            let newLast = this.last.previous
-            this.last.previous = null;
+            let newLast = this.last.previous;
+            this.last.setPrevious(null);
             newLast.next = null;
             this.last = newLast;
             this.size--;
@@ -69,7 +78,13 @@ class VerticalSizedFIFODeque {
     }
 
     return(){
-        //TODO return an array of all elements
+        let n = this.first;
+        let constructedList = [];
+        while (n != null){
+            constructedList.push(n);
+            n = this.first.next;
+        }
+        return constructedList;
     }
 }
 
@@ -79,4 +94,27 @@ class ElementNode {
         this.previous = null;
         this.next = null;
     }
+
+    setNext(n){
+        this.next = n;
+    }
+
+    setPrevious(p){
+        this.previous = p;
+    }
+
+    getNext(){
+        return this.next;
+    }
+
+    getPrevious(){
+        return this.previous;
+    }
+
+    getElement(){
+        return this.element;
+    }
 }
+
+
+export default VerticalSizedFIFODeque
