@@ -67,3 +67,31 @@ test('Appending to a full list pops first item off', () => {
     expect(result).toEqual(["TEST 2", "TEST 3"])
 });
 
+test('Prepending to a full list pops last item off', () => {
+    let q = new VerticalSizedFIFODeque(2);
+    q.prepend("TEST 1");
+    q.prepend("TEST 2");
+    q.prepend("TEST 3");
+    let result = q.return();
+
+    expect(q.size).toBe(2)
+    expect(q.verifySize()).toBe(2)
+    expect(result).toHaveLength(2);
+    expect(result).toEqual(["TEST 3", "TEST 2"])
+});
+
+test('Complex append/prepend drop the correct items', () => {
+    let q = new VerticalSizedFIFODeque(3);
+    q.prepend("TEST 1"); // >[1|.|.]
+    q.append("TEST 2"); // [1|.|2]<
+    q.prepend("TEST 3"); // >[3|1|2]
+    q.prepend("TEST 4"); // >[4|3|1] (2)
+    q.append("TEST 5"); // (4) [3|1|5]<
+    let result = q.return();
+
+    expect(q.size).toBe(3)
+    expect(q.verifySize()).toBe(3)
+    expect(result).toHaveLength(3);
+    expect(result).toEqual(["TEST 3", "TEST 1", "TEST 5"])
+});
+
