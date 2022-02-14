@@ -14,6 +14,7 @@ test('Appending n elements increase the size by n', () => {
     let q = new VerticalSizedFIFODeque(10);
     q.append("TEST 1");
     q.append("TEST 2");
+
     let result = q.return();
 
     expect(q.size).toBe(2)
@@ -51,5 +52,18 @@ test('Appending and prepending work well together to increase size', () => {
     expect(q.size).toBe(2)
     expect(q.verifySize()).toBe(2)
     expect(result).toHaveLength(2);
+});
+
+test('Appending to a full list pops first item off', () => {
+    let q = new VerticalSizedFIFODeque(2);
+    q.append("TEST 1");
+    q.append("TEST 2");
+    q.append("TEST 3");
+    let result = q.return();
+
+    expect(q.size).toBe(2)
+    expect(q.verifySize()).toBe(2)
+    expect(result).toHaveLength(2);
+    expect(result).toEqual(["TEST 2", "TEST 3"])
 });
 

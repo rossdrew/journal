@@ -1,5 +1,3 @@
-import JournalEntries from "../components/journalEntries";
-
 class VerticalSizedFIFODeque {
     constructor(size) {
         this.first = null;
@@ -22,24 +20,20 @@ class VerticalSizedFIFODeque {
 
     append(element){
         let newElement = new ElementNode(element)
+        console.log("Appending a new element '" + element + "'");
         if (this.first == null){
-            console.log("No first entry")
+            console.log("No first entry");
             this.first = newElement;
             this.last = newElement;
             this.size = 1;
             return;
-        }else{
-            console.log(">>>" + this.first.getElement())
-            // console.log(this.last.getElement() + "<<<")
         }
 
-        console.log("Adding '" + element);
         // (f,..,l) -> (f,..,l,n)
         newElement.setPrevious(this.last)
         this.last.setNext(newElement);
         this.last = newElement;
         this.size++;
-        console.log("...wrapped as '" + newElement.getPrevious().getElement() + "-" + newElement.element + "-" + newElement.getNext() + "'");
 
         //Burn top element
         if (this.size > this.maxSize){
@@ -49,7 +43,6 @@ class VerticalSizedFIFODeque {
             this.first = newFirst;
             this.size--;
         }
-        console.log("...COMPLETE")
     }
 
     prepend(element){
@@ -81,8 +74,8 @@ class VerticalSizedFIFODeque {
         let n = this.first;
         let constructedList = [];
         while (n != null){
-            constructedList.push(n);
-            n = this.first.next;
+            constructedList.push(n.getElement());
+            n = n.getNext();
         }
         return constructedList;
     }
