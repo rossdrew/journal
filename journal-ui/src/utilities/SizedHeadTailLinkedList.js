@@ -1,4 +1,4 @@
-class VerticalSizedFIFODeque {
+class SizedHeadTailLinkedList {
     constructor(size) {
         this.first = null;
         this.last = null;
@@ -10,7 +10,7 @@ class VerticalSizedFIFODeque {
         let count = 0;
         let index = this.first;
 
-        while (index != null){
+        while (index){
             count++;
             index = index.next
         }
@@ -20,9 +20,7 @@ class VerticalSizedFIFODeque {
 
     append(element){
         let newElement = new ElementNode(element)
-        console.log("Appending a new element '" + element + "'");
-        if (this.first == null){
-            console.log("No first entry");
+        if (!this.first){
             this.first = newElement;
             this.last = newElement;
             this.size = 1;
@@ -47,7 +45,7 @@ class VerticalSizedFIFODeque {
 
     prepend(element){
         let newElement = new ElementNode(element)
-        if (this.first == null){
+        if (!this.first){
             this.first = newElement;
             this.last = newElement;
             this.size = 1;
@@ -70,10 +68,20 @@ class VerticalSizedFIFODeque {
         }
     }
 
+    deepClone(){
+        let clonedList = new SizedHeadTailLinkedList(this.size);
+        let n = this.first;
+        while (n){
+            clonedList.append(n.getElement());
+            n = n.getNext();
+        }
+        return clonedList;
+    }
+
     return(){
         let n = this.first;
         let constructedList = [];
-        while (n != null){
+        while (n){
             constructedList.push(n.getElement());
             n = n.getNext();
         }
@@ -110,4 +118,4 @@ class ElementNode {
 }
 
 
-export default VerticalSizedFIFODeque
+export default SizedHeadTailLinkedList
