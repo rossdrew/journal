@@ -78,7 +78,7 @@ class SizedHeadTailLinkedList {
         return clonedList;
     }
 
-    return(){
+    asCollection(){
         let n = this.first;
         let constructedList = [];
         while (n){
