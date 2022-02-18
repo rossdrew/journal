@@ -12,7 +12,7 @@ class BufferedJournalEntries extends Component {
                 //Start index of loaded entries
                 start: 0,
                 //Buffer of entries loaded
-                data: new SizedHeadTailLinkedList(20)
+                entries: new SizedHeadTailLinkedList(20)
             },
 
             entriesPagingHeader: {
@@ -50,8 +50,8 @@ class BufferedJournalEntries extends Component {
     }
 
     elementCount() {
-        if (typeof this.state.loadedEntries.data !== 'undefined')
-            return typeof this.state.loadedEntries.data.size
+        if (typeof this.state.loadedEntries.entries !== 'undefined')
+            return typeof this.state.loadedEntries.entries.size
         else
             return 0
     }
@@ -67,7 +67,7 @@ class BufferedJournalEntries extends Component {
             limit : this.state.entryLimit
         }).then((pagedData) => {
             this.setState({
-                entryBuffer: this.state.loadedEntries.data.append(pagedData.data).deepClone(),
+                entryBuffer: this.state.loadedEntries.entries.append(pagedData.data).deepClone(),
             })
         }).catch(console.log);
 
@@ -120,10 +120,19 @@ class BufferedJournalEntries extends Component {
             start : this.state.entryStartIndex,
             limit : this.state.entryLimit
         }).then((pagedData) => {
+            console.log("Existing: " + this.state.loadedEntries.entries.size);
+            let newData = this.state.loadedEntries.entries.deepClone();
+            console.log("Clone: " + newData.size);
+            console.log("New Data: " + pagedData.data.length);
+            pagedData.data.forEach(e => console.log(e));
+            pagedData.data.forEach(entry => newData.append(entry)); //XXX this wont always be an append
+            newData.asCollection().forEach(d => console.log(d));
+            console.log("Now: " + newData.size);
+
             this.setState({
-                entries: pagedData.data,
                 loadedEntries: {
-                    start: pagedData.startIndex
+                    start: pagedData.startIndex,
+                    data: newData
                 },
                 entriesPagingHeader: {
                     size: pagedData.size,
@@ -140,7 +149,7 @@ class BufferedJournalEntries extends Component {
     }
 
     entriesRemaining(){
-        return (this.state.loadedEntries.data.size < this.state.entriesPagingHeader.size)
+        return (this.state.loadedEntries.entries.size < this.state.entriesPagingHeader.size)
     }
 
     render() {
@@ -157,7 +166,7 @@ class BufferedJournalEntries extends Component {
 
                     {/*{this.preview()}*/}
 
-                    {this.state.loadedEntries.data.return().map((entry, index) => (
+                    {this.state.loadedEntries.entries.asCollection().map((entry, index) => (
                         <JournalEntry entry={entry}
                                       index={index}
                                       keyPrefix={this.entryCardKeyPrefix + index}
