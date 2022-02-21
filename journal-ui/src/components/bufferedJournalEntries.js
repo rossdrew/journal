@@ -161,7 +161,9 @@ class BufferedJournalEntries extends Component {
                                    refresh={(event) => this.refresh(event)} />
 
                     <sup className="discrete">
-                        Last Updated: {this.state.lastUpdated.toLocaleString()} {(this.state.activeFilter) ? ", Filtered by '" + this.state.activeFilter + "'" : ""}
+                        Last Updated: {this.state.lastUpdated.toLocaleString()} {
+                            (this.state.activeFilter) ? ", Filtered by '" + this.state.activeFilter + "'" : ""
+                        }
                     </sup>
 
                     {/*{this.preview()}*/}
