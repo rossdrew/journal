@@ -18,6 +18,10 @@ class SizedHeadTailLinkedList {
         return count;
     }
 
+    getSize(){
+        return this.size;
+    }
+
     append(element){
         let newElement = new ElementNode(element)
         if (!this.first){
@@ -69,7 +73,7 @@ class SizedHeadTailLinkedList {
     }
 
     deepClone(){
-        let clonedList = new SizedHeadTailLinkedList(this.size);
+        let clonedList = new SizedHeadTailLinkedList(this.maxSize);
         let n = this.first;
         while (n){
             clonedList.append(n.getElement());

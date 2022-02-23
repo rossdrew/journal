@@ -49,13 +49,6 @@ class BufferedJournalEntries extends Component {
         document.removeEventListener('scroll', this.trackScrolling);
     }
 
-    elementCount() {
-        if (typeof this.state.loadedEntries.entries !== 'undefined')
-            return typeof this.state.loadedEntries.entries.size
-        else
-            return 0
-    }
-
     //XXX Could do with some cleanup
     appendEntries() {
         document.removeEventListener('scroll', this.trackScrolling);
@@ -119,25 +112,23 @@ class BufferedJournalEntries extends Component {
             contains : this.state.containsFilter,
             start : this.state.entryStartIndex,
             limit : this.state.entryLimit
-        }).then((pagedData) => {
-            console.log("Existing: " + this.state.loadedEntries.entries.size);
-            let newData = this.state.loadedEntries.entries.deepClone();
-            console.log("Clone: " + newData.size);
-            console.log("New Data: " + pagedData.data.length);
-            pagedData.data.forEach(e => console.log(e));
-            pagedData.data.forEach(entry => newData.append(entry)); //XXX this wont always be an append
-            newData.asCollection().forEach(d => console.log(d));
-            console.log("Now: " + newData.size);
+        }).then((pagedEntries) => {
+            let updatedEntries = this.state.loadedEntries.entries.deepClone();
+            pagedEntries.data.forEach(entry => {
+                updatedEntries.append(entry);
+            }); //XXX this wont always be an append
+
+            console.log(updatedEntries.getSize() + " entries loaded..")
 
             this.setState({
                 loadedEntries: {
-                    start: pagedData.startIndex,
-                    data: newData
+                    start: pagedEntries.startIndex,
+                    entries: updatedEntries
                 },
                 entriesPagingHeader: {
-                    size: pagedData.size,
-                    limit: pagedData.limit,
-                    start: pagedData.startIndex
+                    size: pagedEntries.size,
+                    limit: pagedEntries.limit,
+                    start: pagedEntries.startIndex
                 },
                 lastUpdated: new Date(),
             })
@@ -148,11 +139,29 @@ class BufferedJournalEntries extends Component {
         })
     }
 
+    elementCount() {
+        if (typeof this.state.loadedEntries.entries !== 'undefined') {
+            return typeof this.state.loadedEntries.entries.getSize()
+        }else {
+            return 0
+        }
+    }
+
     entriesRemaining(){
-        return (this.state.loadedEntries.entries.size < this.state.entriesPagingHeader.size)
+        return (this.elementCount() < this.state.entriesPagingHeader.size)
+    }
+
+    loadedEntrySet(){
+        if (this.elementCount() > 0) {
+            return this.state.loadedEntries.entries.asCollection();
+        }else {
+            return [];
+        }
     }
 
     render() {
+        this.loadedEntrySet().forEach(e => console.log(e))
+
         return (
             <div className="w-100 d-flex justify-content-around">
                 <div className="w-50 entry-listing">
@@ -168,7 +177,7 @@ class BufferedJournalEntries extends Component {
 
                     {/*{this.preview()}*/}
 
-                    {this.state.loadedEntries.entries.asCollection().map((entry, index) => (
+                    {this.loadedEntrySet().map((entry, index) => (
                         <JournalEntry entry={entry}
                                       index={index}
                                       keyPrefix={this.entryCardKeyPrefix + index}
