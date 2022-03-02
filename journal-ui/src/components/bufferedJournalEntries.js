@@ -118,7 +118,7 @@ class BufferedJournalEntries extends Component {
                 updatedEntries.append(entry);
             }); //XXX this wont always be an append
 
-            console.log(updatedEntries.getSize() + " entries loaded..")
+            console.log(updatedEntries.getSize() + " entries loaded from server")
 
             this.setState({
                 loadedEntries: {
@@ -141,7 +141,7 @@ class BufferedJournalEntries extends Component {
 
     elementCount() {
         if (typeof this.state.loadedEntries.entries !== 'undefined') {
-            return typeof this.state.loadedEntries.entries.getSize()
+            return this.state.loadedEntries.entries.getSize()
         }else {
             return 0
         }
