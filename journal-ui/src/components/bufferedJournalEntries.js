@@ -53,14 +53,22 @@ class BufferedJournalEntries extends Component {
     appendEntries() {
         document.removeEventListener('scroll', this.trackScrolling);
 
-        let nextElementIndex = this.state.loadedEntries.start + this.elementCount()
+        let startIndexOfAppendedEntries = this.state.loadedEntries.start + this.elementCount();
+
         this.getEntries({
             contains : this.state.containsFilter,
-            start : nextElementIndex,
+            start : startIndexOfAppendedEntries,
             limit : this.state.entryLimit
         }).then((pagedData) => {
+            let updatedEntries = this.state.loadedEntries.entries.deepClone();
+            pagedData.data.forEach(pagedDataEntry => {
+                updatedEntries.append(pagedDataEntry);
+            }); //XXX this wont always be an append
+
             this.setState({
-                entryBuffer: this.state.loadedEntries.entries.append(pagedData.data).deepClone(),
+                loadedEntries: {
+                    entries: updatedEntries
+                },
             })
         }).catch(console.log);
 
