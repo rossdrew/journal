@@ -6,6 +6,10 @@ class SizedHeadTailLinkedList {
         this.size = 0;
     }
 
+    getLimit(){
+        return this.maxSize;
+    }
+
     verifySize(){
         let count = 0;
         let index = this.first;

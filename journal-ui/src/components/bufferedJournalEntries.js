@@ -59,15 +59,21 @@ class BufferedJournalEntries extends Component {
             contains : this.state.containsFilter,
             start : startIndexOfAppendedEntries,
             limit : this.state.entryLimit
-        }).then((pagedData) => {
+        }).then((pagedResponseData) => {
             let updatedEntries = this.state.loadedEntries.entries.deepClone();
-            pagedData.data.forEach(pagedDataEntry => {
+            //XXX this wont always be an append
+            //Calculate new index
+            let newIndex = this.state.loadedEntries.start + ((this.state.loadedEntries.entries.getSize() + pagedResponseData.data.length) - this.state.loadedEntries.entries.getLimit())
+            if (newIndex < 0) newIndex = 0
+
+            pagedResponseData.data.forEach(pagedDataEntry => {
                 updatedEntries.append(pagedDataEntry);
             }); //XXX this wont always be an append
 
             this.setState({
                 loadedEntries: {
-                    entries: updatedEntries
+                    entries: updatedEntries,
+                    start: newIndex
                 },
             })
         }).catch(console.log);
@@ -155,8 +161,8 @@ class BufferedJournalEntries extends Component {
         }
     }
 
-    entriesRemaining(){
-        return (this.elementCount() < this.state.entriesPagingHeader.size)
+    appendableEntriesRemaining(){
+        return (this.state.loadedEntries.start + this.elementCount() < this.state.entriesPagingHeader.size)
     }
 
     loadedEntrySet(){
@@ -193,7 +199,7 @@ class BufferedJournalEntries extends Component {
                     ))}
 
                     <div className="continue" id="infiniteScroller">
-                        { this.entriesRemaining() ? "..." : "."}
+                        { this.appendableEntriesRemaining() ? "..." : "."}
                     </div>
                 </div>
                 <FootControl />
