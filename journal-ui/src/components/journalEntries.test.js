@@ -6,3 +6,6 @@ test('Renders empty entries with last updated banner', () => {
     const lastUpdatedText = screen.getByText("Last Updated:", {exact: false})
     expect(lastUpdatedText).toBeInTheDocument();
 });
+
+
+//Test that when the server returns an item, an item is shown
