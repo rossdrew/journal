@@ -40,13 +40,27 @@ class BufferedJournalEntries extends Component {
         document.addEventListener('scroll', this.trackScrolling);
     }
 
-    isBottomOf(element) {
+    isBottomOfScreen(element) {
         if (element)
-            return element.getBoundingClientRect().bottom <= window.innerHeight - 100;
+            return element.getBoundingClientRect().top <= window.innerHeight - 100;
+    }
+
+    isTopOfScreen(element) {
+        if (element)
+            return element.getBoundingClientRect().bottom > 0;
     }
 
     componentWillUnmount() {
         document.removeEventListener('scroll', this.trackScrolling);
+    }
+
+    //XXX Could do with some cleanup
+    prependEntries() {
+        document.removeEventListener('scroll', this.trackScrolling);
+
+        console.log("TODO: Prepend entries")
+
+        document.addEventListener('scroll', this.trackScrolling);
     }
 
     //XXX Could do with some cleanup
@@ -61,19 +75,16 @@ class BufferedJournalEntries extends Component {
             limit : this.state.entryLimit
         }).then((pagedResponseData) => {
             let updatedEntries = this.state.loadedEntries.entries.deepClone();
-            //XXX this wont always be an append
-            //Calculate new index
-            let newIndex = this.state.loadedEntries.start + ((this.state.loadedEntries.entries.getSize() + pagedResponseData.data.length) - this.state.loadedEntries.entries.getLimit())
-            if (newIndex < 0) newIndex = 0
+            let newStartIndex = this.state.loadedEntries.start + ((this.state.loadedEntries.entries.getSize() + pagedResponseData.data.length) - this.state.loadedEntries.entries.getLimit())
 
             pagedResponseData.data.forEach(pagedDataEntry => {
                 updatedEntries.append(pagedDataEntry);
-            }); //XXX this wont always be an append
+            });
 
             this.setState({
                 loadedEntries: {
                     entries: updatedEntries,
-                    start: newIndex
+                    start: (newStartIndex < 0) ? 0 : newStartIndex
                 },
             })
         }).catch(console.log);
@@ -82,10 +93,13 @@ class BufferedJournalEntries extends Component {
     }
 
     trackScrolling = () => {
-        const wrappedElement = document.getElementById('infiniteScroller');
+        const prependElement = document.getElementById('infiniteScrollerPrepend');
+        const appendElement = document.getElementById('infiniteScrollerAppend');
         //XXX Fetches and appends new entries
-        if (this.isBottomOf(wrappedElement)) {
+        if (this.isBottomOfScreen(appendElement)) {
             this.appendEntries()
+        }else if (this.isTopOfScreen(prependElement)){
+            this.prependEntries()
         }
     };
 
@@ -189,6 +203,10 @@ class BufferedJournalEntries extends Component {
                         }
                     </sup>
 
+                    <div className="continue" id="infiniteScrollerPrepend">
+                        { this.state.loadedEntries.start > 0 ? "..." : ""}
+                    </div>
+
                     {/*{this.preview()}*/}
 
                     {this.loadedEntrySet().map((entry, index) => (
@@ -198,7 +216,7 @@ class BufferedJournalEntries extends Component {
                                       key={this.entryCardKeyPrefix + index} />
                     ))}
 
-                    <div className="continue" id="infiniteScroller">
+                    <div className="continue" id="infiniteScrollerAppend">
                         { this.appendableEntriesRemaining() ? "..." : "."}
                     </div>
                 </div>

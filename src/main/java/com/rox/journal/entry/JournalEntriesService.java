@@ -53,9 +53,13 @@ public class JournalEntriesService {
                 .mapToObj(testEntries::get)
                 .collect(Collectors.toCollection(ArrayList::new));
 
+        int lastItem = query.getStart() + limit;
+        if (lastItem >= orderedTestEntries.size())
+            lastItem = orderedTestEntries.size();
+
         final List<JournalEntry> results = orderedTestEntries.subList(
                 query.getStart(),
-                query.getStart() + limit
+                lastItem
         ).stream().filter(e -> {
             return e.getBody().contains(query.getBodyContains());
         }).collect(Collectors.toList());
