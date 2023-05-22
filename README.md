@@ -4,6 +4,10 @@ A utility to log journal entries that represent actions and thoughts then identi
 
 The intent is for this to function a little like Twitter with some workflow management thrown in.  You log actions and useful information, you can reference it and it will keep track of tasks you have open.
 
+### Running
+
+The API is run via `JournalApplication` through Springboot
+The UI is run via journal-ui folder via npm with `npm start`
 
 ### Use cases 
 
