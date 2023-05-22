@@ -6,8 +6,8 @@ The intent is for this to function a little like Twitter with some workflow mana
 
 ### Running
 
-The API is run via `JournalApplication` through Springboot
-The UI is run via journal-ui folder via npm with `npm start`
+- The API is run via `JournalApplication` through Springboot.
+- The UI is run via journal-ui folder via npm with `npm start`
 
 ### Use cases 
 
