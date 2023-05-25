@@ -3,6 +3,7 @@ import HeaderControl from "./headerControl";
 import JournalEntry from "./journalEntry";
 import FootControl from "./footControl";
 import SizedHeadTailLinkedList from "../utilities/SizedHeadTailLinkedList";
+import JournalEntryLink from "./journalEntryLink";
 
 class BufferedJournalEntries extends Component {
     constructor() {
@@ -13,6 +14,10 @@ class BufferedJournalEntries extends Component {
                 start: 0,
                 //Buffer of entries loaded
                 entries: new SizedHeadTailLinkedList(20)
+            },
+
+            loadedTasks: {
+                tasks: []
             },
 
             entriesPagingHeader: {
@@ -131,6 +136,14 @@ class BufferedJournalEntries extends Component {
             .catch(console.log);
     }
 
+    getTasks(){
+        let url = 'http://localhost:8080/tasks';
+
+        return fetch(url)
+            .then(res => res.json())
+            .catch(console.log);
+    }
+
     refresh(event) {
         if (event) {
             event.preventDefault()
@@ -144,9 +157,9 @@ class BufferedJournalEntries extends Component {
             let updatedEntries = this.state.loadedEntries.entries.deepClone();
             pagedEntries.data.forEach(entry => {
                 updatedEntries.append(entry);
-            }); //XXX this wont always be an append
+            }); //XXX this won't always be an append operation
 
-            console.log(updatedEntries.getSize() + " entries loaded from server")
+            // console.log(updatedEntries.getSize() + " entries loaded from server")
 
             this.setState({
                 loadedEntries: {
@@ -161,6 +174,25 @@ class BufferedJournalEntries extends Component {
                 lastUpdated: new Date(),
             })
         }).catch(console.log);
+
+        //XXX Why do I need to manually map from an array to an array
+        this.getTasks().then((responseTasks) => {
+            let intemediateTaskCollection = [];
+            responseTasks.data.forEach(entry => {
+                intemediateTaskCollection = intemediateTaskCollection.concat(entry);
+            });
+            this.setState({
+                loadedTasks: {
+                    tasks: intemediateTaskCollection
+                }
+            })
+
+            console.log("TEST")
+            console.log(intemediateTaskCollection)
+            console.log(responseTasks.data)
+            console.log(this.state.loadedTasks.tasks)
+            console.log("TEST")
+        })
 
         this.setState({
             activeFilter: this.state.containsFilter
@@ -203,11 +235,12 @@ class BufferedJournalEntries extends Component {
                         }
                     </sup>
 
+                    {/*Is there a better way to do this?*/}
                     <div className="continue" id="infiniteScrollerPrepend">
                         { this.state.loadedEntries.start > 0 ? "..." : ""}
                     </div>
 
-                    {/*{this.preview()}*/}
+                    {this.preview()}
 
                     {this.loadedEntrySet().map((entry, index) => (
                         <JournalEntry entry={entry}
@@ -215,6 +248,12 @@ class BufferedJournalEntries extends Component {
                                       keyPrefix={this.entryCardKeyPrefix + index}
                                       key={this.entryCardKeyPrefix + index} />
                     ))}
+
+                    {/* WIP  WIP  WIP  WIP  WIP  WIP  WIP  WIP  WIP */}
+                    {/*<div class="debug"><b><u>Task Debugging</u></b><br/>{this.state.loadedTasks.tasks.length} Items...</div>*/}
+                    {/*{this.state.loadedTasks.tasks.map( (task, index) =>*/}
+                    {/*    <JournalEntryLink task={task} entries={this.state.loadedEntries} index={index}/>*/}
+                    {/*)}*/}
 
                     <div className="continue" id="infiniteScrollerAppend">
                         { this.appendableEntriesRemaining() ? "..." : "."}
