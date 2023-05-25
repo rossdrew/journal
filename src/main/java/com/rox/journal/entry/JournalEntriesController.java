@@ -16,14 +16,8 @@ import java.util.Optional;
 public class JournalEntriesController {
     private final JournalEntriesService journalEntriesService;
 
-    public JournalEntriesController(JournalEntriesService journalEntriesService) throws InterruptedException {
+    public JournalEntriesController(JournalEntriesService journalEntriesService) {
         this.journalEntriesService = journalEntriesService;
-        /* DEBUG */
-//        for (int i=0; i<25; i++) {
-//            journalEntriesService.append(new JournalEntry("This is TEST journal entry No." + i));
-//            Thread.sleep(100);
-//        }
-        /* /DEBUG */
     }
 
     @Bean

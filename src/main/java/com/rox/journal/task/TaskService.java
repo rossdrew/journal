@@ -12,7 +12,7 @@ public class TaskService {
     private List<Task> tasks = new ArrayList<>();
 
     public TaskService(){
-        tasks.add(new Task("PAZ-1")); //DEBUG
+
     }
 
     public boolean append(Task entry){
