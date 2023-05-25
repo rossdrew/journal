@@ -72,9 +72,13 @@ class JournalEntry extends Component {
         )
     }
 
+    entryKey(entry){
+        return "D"+ entry.creation.substring(0, entry.creation.indexOf('+'))
+    }
+
     render() {
         return (
-            <div className="card w-100 p-0" key={this.props.keyPrefix+"content"} id={"D"+ this.props.entry.creation.substring(0, this.props.entry.creation.indexOf('+'))}>
+            <div className="card w-100 p-0" key={this.props.keyPrefix+"content"} id={this.entryKey(this.props.entry)}>
                 <div className="card-header">
                     <div key={this.props.keyPrefix+"date"}
                          className="entry-date">
