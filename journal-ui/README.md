@@ -2,6 +2,15 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+It follows what I believe is a pretty standard React app layout.  
+- [App](src/app.js) is the entry point
+  - [BufferedJournalEntries](src/components/bufferedJournalEntries.js) (a buffering version of [JournalEntries](src/components/journalEntries.js)
+    - [HeaderControl](src/components/headerControl.js) containing the entry filtering components and some versioning text
+    - A listing of 0 or more [JournalEntry](src/components/headerControl.js)
+    - [FootControl](src/components/footControl.js) containing the entry creation components
+
+---
+
 ## Available Scripts
 
 In the project directory, you can run:
