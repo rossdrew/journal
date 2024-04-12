@@ -3,13 +3,15 @@ package com.rox.journal.entry;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class JournalEntryTest {
-    final Date testDate = new Date();
+    final Date testDate = new GregorianCalendar(2015, Calendar.OCTOBER, 21).getTime();
 
     @BeforeAll
     public static void setup(){
@@ -55,8 +57,8 @@ public class JournalEntryTest {
 
     @Test
     public void testInequality(){
-        final JournalEntry entryA = JournalEntry.create("This is a test").at(testDate);
-        final JournalEntry differentContentEntry = JournalEntry.create("This is not the same").at(testDate);
+        final JournalEntry entryA = JournalEntry.create("Marty Arrives in 2015").at(testDate);
+        final JournalEntry differentContentEntry = JournalEntry.create("Jaws 19 Released").at(testDate);
         final JournalEntry differentDateEntry = JournalEntry.create("This is a test").at(new Date());
         final JournalEntry differentContentAndDateEntry = JournalEntry.create("This is not the same").at(new Date());
 
