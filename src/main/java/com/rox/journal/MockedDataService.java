@@ -4,16 +4,14 @@ import com.rox.journal.entry.JournalEntriesService;
 import com.rox.journal.entry.JournalEntry;
 import com.rox.journal.task.Task;
 import com.rox.journal.task.TaskService;
-import org.springframework.stereotype.Repository;
 
 import javax.annotation.PostConstruct;
 
 /**
  * FOR DEBUG ONLY
- *
  * Sets up some mock data in the services
  **/
-@Repository
+//@Repository
 public class MockedDataService {
     private final JournalEntriesService journalEntriesService;
     private final TaskService taskService;
@@ -43,6 +41,12 @@ public class MockedDataService {
         final JournalEntry journalEntry5 = JournalEntry.create("This is TEST journal entry No.5");
         journalEntriesService.append(journalEntry5);
         Thread.sleep(100);
+
+        for (int entryIndex = 6; entryIndex < 24; entryIndex++){
+            final JournalEntry journalEntry = JournalEntry.create("This is TEST journal entry No."+entryIndex);
+            journalEntriesService.append(journalEntry);
+            Thread.sleep(100);
+        }
 
         final Task sampleTask = new Task("Sample Task from 2-4");
         sampleTask.startedAt(journalEntry2).completeAsOf(journalEntry4);
