@@ -23,6 +23,12 @@ public class JournalEntriesService {
     private static final Pattern starting = Pattern.compile("_([^_]*)_");
     private static final Pattern completing = Pattern.compile("--([^--]*)--");
 
+    /**
+     * Append a {@link JournalEntry}
+     *
+     * @param entry the {@link JournalEntry} to append
+     * @return the provided {@link JournalEntry}
+     */
     public JournalEntry append(JournalEntry entry){
         entry = entry.at(new java.util.Date());
 
@@ -41,6 +47,12 @@ public class JournalEntriesService {
         return entry;
     }
 
+    /**
+     * List all {@link JournalEntry} that match the provided {@link EntriesQuery}
+     *
+     * @param query {@link EntriesQuery} to run over all entries
+     * @return all matching {@link JournalEntry} objects wrapped in {@link PageWrapper}
+     */
     public PageWrapper<JournalEntry> list(final EntriesQuery query){
         if (testEntries.size() <= query.getStart())
             return PageWrapper.around(Collections.emptyList());
